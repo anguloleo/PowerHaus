@@ -1,0 +1,94 @@
+
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.profile-dropdown {
+  position: absolute;
+  right: 10px;
+  top: 50px;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+
+.profile-dropdown li {
+  margin: 5px 0;
+  cursor: pointer;
+}
+
+.profile-dropdown button {
+  all: unset;
+  cursor: pointer;
+  color: #0077cc;
+}
+
+.hidden {
+  display: none;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+
+.navigation-container {
+  display: flex;
+  justify-content: space-between; /* or flex-end if only ProfileButton exists */
+  align-items: center;
+  padding: 10px 20px;
+  position: relative;
+}
+
+.navigation-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+}
+
+.profile-container {
+  position: relative;
+}
+
+.profile-dropdown {
+  position: absolute;
+  right: 0;
+  top: 40px;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+
+.profile-dropdown li {
+  margin: 5px 0;
+  cursor: pointer;
+}
+
+.profile-dropdown button {
+  all: unset;
+  cursor: pointer;
+  color: #0077cc;
+}
+
+.hidden {
+  display: none;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
