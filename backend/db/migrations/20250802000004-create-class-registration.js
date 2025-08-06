@@ -1,7 +1,5 @@
 'use strict';
 
-const { on } = require("mocha/lib/runner");
-
 let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  
