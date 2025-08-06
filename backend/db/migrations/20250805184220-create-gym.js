@@ -1,5 +1,7 @@
 'use strict';
 
+const { sequelize } = require("../models");
+
 let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  
@@ -7,39 +9,43 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('Gyms', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstName: {
-        type: Sequelize.STRING(30),
+      name: {
+        type: Sequelize.STRING
+      },
+      address: {
+        type: Sequelize.STRING
+      },
+      city: {
+        type: Sequelize.STRING
+      },
+      state: {
+        type: Sequelize.STRING
+      },
+      zip: {
+        type: Sequelize.STRING
+      },
+      latitude: {
+        type: Sequelize.FLOAT,
         allowNull: false,
       },
-      lastName: {
-        type: Sequelize.STRING(30),
+      longitude: {
+        type: Sequelize.FLOAT,
         allowNull: false,
       },
-      username: {
-        type: Sequelize.STRING(30),
-        allowNull: false,
-        unique: true
-      },
-      email: {
-        type: Sequelize.STRING(256),
-        allowNull: false,
-        unique: true
-      },
-      hashedPassword: {
-        type: Sequelize.STRING.BINARY,
+      telephone: {
+        type: Sequelize.STRING,
         allowNull: false
       },
-      role: {
-        type: Sequelize.ENUM('member', 'instructor', 'trainer', 'staff', 'admin'),
-        allowNull: false,
-        defaultValue: 'member'
+      hours: {
+        type: Sequelize.STRING, 
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -53,9 +59,8 @@ module.exports = {
       }
     }, options);
   },
-
   async down(queryInterface, Sequelize) {
-    options.tableName = "Users";
-    return queryInterface.dropTable(options);
+    options.tableName = "Gyms"
+    await queryInterface.dropTable(options);
   }
 };

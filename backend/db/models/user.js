@@ -5,7 +5,22 @@ const { Model, Validator } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      // define association here
+      
+      User.hasMany(models.ClassRegistration, {
+        foreignKey: 'userId',
+        onDelete: 'CASCADE',
+      });
+
+      User.belongsToMany(models.GymClass, {
+        through: models.ClassRegistration,
+        foreignKey: 'userId',
+        otherKey: 'gymClassId'
+      });
+
+      User.hasMany(models.GymClass, {
+        foreignKey: 'instructorId',
+        as: 'TaughtClasses'
+      });
     }
   }
 
@@ -54,6 +69,11 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           len: [60, 60],
         },
+      },
+      role: {
+        type: DataTypes.ENUM('member', 'instructor', 'trainer', 'staff', 'admin'),
+        allowNull: false,
+        defaultValue: 'member'
       },
     },
     {
