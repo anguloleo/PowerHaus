@@ -1,0 +1,46 @@
+.gym-class-list {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.week-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.calendar-week {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.calendar-day {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.calendar-day.selected {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+}
+
+.class-list {
+  list-style: none;
+  padding: 0;
+}
+
+.class-card {
+  background: #f8f8f8;
+  border: 1px solid #ddd;
+  padding: 12px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+}

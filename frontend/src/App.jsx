@@ -2,7 +2,11 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Navigation from './components/Navigation';
+import GymClassList from './components/GymClassList';
+import GymMap from './components/GymMap'; 
+import GymDetail from './components/GymDetail';
 import * as sessionActions from './store/session';
+
 
 function Layout() {
   const dispatch = useDispatch();
@@ -29,6 +33,18 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <h1>Welcome!</h1>
+      },
+      {
+        path: '/classes',
+        element: <GymClassList />
+      },
+      {
+        path: '/gyms', 
+        element: <GymMap />
+      },
+      {
+        path: '/gyms/:gymId', 
+        element: <GymDetail />
       }
     ]
   }

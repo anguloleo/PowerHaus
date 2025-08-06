@@ -1,5 +1,3 @@
-// frontend/src/components/Navigation/Navigation.jsx
-
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
@@ -13,6 +11,8 @@ function Navigation({ isLoaded }) {
       <ul className="navigation-list">
         <li>
           <NavLink to="/">Home</NavLink>
+          <NavLink to="/classes">Classes</NavLink>
+          <NavLink to="/gyms">Gyms</NavLink>
         </li>
       </ul>
       {isLoaded && (

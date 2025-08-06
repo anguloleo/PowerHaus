@@ -1,0 +1,22 @@
+.gym-detail-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.gym-detail-container h2 {
+  margin-bottom: 15px;
+}
+
+.gym-detail-container p {
+  margin: 5px 0;
+}
+
+.map-container {
+  height: 400px;
+  width: 100%;
+  margin-top: 20px;
+}

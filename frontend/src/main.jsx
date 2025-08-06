@@ -8,6 +8,7 @@ import { restoreCSRF, csrfFetch } from './store/csrf';
 import * as sessionActions from './store/session';
 import { Modal, ModalProvider } from './context/Modal';
 
+
 const store = configureStore();
 
 if (import.meta.env.MODE !== 'production') {
