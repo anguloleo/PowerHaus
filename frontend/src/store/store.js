@@ -2,14 +2,18 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { thunk } from 'redux-thunk';
 import sessionReducer from './session';
 import classRegistrationReducer from './classRegistration';
-import gymClassReducer from './gymClasses';
+import gymClassReducer from './gymClasses.js';
 import gymReducer from './gyms';
+import repairRequestsReducer from './repairRequests.js';
+import equipmentReducer from './equipment.js';
 
 const rootReducer = combineReducers({
     session: sessionReducer,
     classRegistration: classRegistrationReducer,
     gymClasses: gymClassReducer,
     gyms: gymReducer,
+    repairRequests: repairRequestsReducer,
+    equipment: equipmentReducer,
 
 
 });

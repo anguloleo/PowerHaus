@@ -1,6 +1,7 @@
 const express = require('express');
-const { Gym } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth'); 
+const { Gym, Equipment } = require('../../db/models');
+
 
 const router = express.Router();
 
@@ -69,6 +70,32 @@ router.delete('/:id', requireAuth, async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Failed to delete gym' });
+  }
+});
+
+
+
+//GET ALL EQUIPMENT FROM A GYM
+// GET /api/gyms/:gymId/equipment
+router.get('/:gymId/equipment', async (req, res) => {
+  try {
+    const { gymId } = req.params;
+
+  const gym = await Gym.findByPk(gymId);
+  if (!gym) {
+    return res.status(404).json({ message: "Gym not found" });
+  }
+
+  const equipmentList = await Equipment.findAll({
+    where: { gymId },
+    attributes: ['id', 'name'] 
+  });
+
+  return res.json(equipmentList);
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Failed to get equipment" });
   }
 });
 

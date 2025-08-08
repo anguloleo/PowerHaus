@@ -98,6 +98,7 @@ const initialState = {
 // Reducer
 export default function gymReducer(state = initialState, action) {
   switch (action.type) {
+    
     case SET_ALL_GYMS: {
       const allGyms = {};
       action.gyms.forEach(gym => {

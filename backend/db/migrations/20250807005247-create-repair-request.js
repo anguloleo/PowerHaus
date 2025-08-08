@@ -2,57 +2,48 @@
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA;  
+  options.schema = process.env.SCHEMA;
 }
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('GymClasses', {
+    await queryInterface.createTable('RepairRequests', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      gymId: {
+      equipmentId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'Gyms', key: 'id' },
+        references: {
+          model: 'Equipments',
+          key: 'id'
+        },
         onDelete: 'CASCADE'
       },
-      instructorId: {
+      userId: {
         type: Sequelize.INTEGER,
-        allowNull: true,
-        references: { model: 'Users', key: 'id' },
-        onDelete: 'SET NULL'
-      },
-      name: {
-        type: Sequelize.STRING,
         allowNull: false,
+        references: {
+          model: 'Users',
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
       },
       description: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      date: {
-        type: Sequelize.DATEONLY,
-        allowNull: false,
-      },
-      time: {
-        type: Sequelize.TIME,
-        allowNull: false,
-      },
-      duration: {
-        type: Sequelize.INTEGER, 
-        allowNull: false,
-      },
-      capacity: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.TEXT,
         allowNull: false
       },
-      location: {
-        type: Sequelize.STRING, 
+      status: {
+        type: Sequelize.ENUM('Open', 'In Progress', 'Resolved'),
         allowNull: false,
+        defaultValue: 'open'
+      },
+      imageUrl: {
+        type: Sequelize.STRING,
+        allowNull: true
       },
       createdAt: {
         allowNull: false,
@@ -68,7 +59,7 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    options.tableName = "GymClasses";
-    await queryInterface.dropTable(options);
+    options.tableName = 'RepairRequests';
+    return queryInterface.dropTable(options);
   }
 };

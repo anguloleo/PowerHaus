@@ -5,11 +5,18 @@ module.exports = (sequelize, DataTypes) => {
   class Gym extends Model {
   
     static associate(models) {
+
       Gym.hasMany(models.GymClass, { 
-        foreignKey: 'gymId' });
+        foreignKey: 'gymId' 
+      });
+
+      Gym.hasMany(models.Equipment, {
+        foreignKey: 'gymId',
+        onDelete: 'CASCADE', 
+        hooks: true,        
+      });
     }
   }
-
 
 
   Gym.init({

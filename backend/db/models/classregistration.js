@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'ClassRegistration',
     indexes: [
     {
-      unique: true,  //prevents user registering more than once
+      unique: true,  
       fields: ['userId', 'gymClassId']
     }
   ]

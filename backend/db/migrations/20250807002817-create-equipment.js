@@ -7,7 +7,7 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('GymClasses', {
+    await queryInterface.createTable('Equipments', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -17,42 +17,23 @@ module.exports = {
       gymId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'Gyms', key: 'id' },
-        onDelete: 'CASCADE'
-      },
-      instructorId: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        references: { model: 'Users', key: 'id' },
-        onDelete: 'SET NULL'
+        references: {
+          model: 'Gyms',
+          key: 'id'
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
       name: {
         type: Sequelize.STRING,
-        allowNull: false,
-      },
-      description: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      date: {
-        type: Sequelize.DATEONLY,
-        allowNull: false,
-      },
-      time: {
-        type: Sequelize.TIME,
-        allowNull: false,
-      },
-      duration: {
-        type: Sequelize.INTEGER, 
-        allowNull: false,
-      },
-      capacity: {
-        type: Sequelize.INTEGER,
         allowNull: false
       },
       location: {
-        type: Sequelize.STRING, 
-        allowNull: false,
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      serialNumber: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -66,9 +47,8 @@ module.exports = {
       }
     }, options);
   },
-
   async down(queryInterface, Sequelize) {
-    options.tableName = "GymClasses";
-    await queryInterface.dropTable(options);
+    options.tableName = 'Equipments';
+    return queryInterface.dropTable(options);
   }
 };

@@ -6,20 +6,29 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       
+      // Student for Gym class
       User.hasMany(models.ClassRegistration, {
         foreignKey: 'userId',
         onDelete: 'CASCADE',
       });
 
+      // Student for Gym Class
       User.belongsToMany(models.GymClass, {
         through: models.ClassRegistration,
         foreignKey: 'userId',
         otherKey: 'gymClassId'
       });
 
+      // Instructor for Gym Class
       User.hasMany(models.GymClass, {
         foreignKey: 'instructorId',
         as: 'TaughtClasses'
+      });
+
+      User.hasMany(models.RepairRequest, {
+        foreignKey: 'userId',
+        onDelete: 'CASCADE',
+        hooks: true
       });
     }
   }

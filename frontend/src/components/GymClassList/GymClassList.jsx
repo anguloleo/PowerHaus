@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchGymClasses } from "../../store/gymClasses";
+import { fetchGymClasses } from "../../store/gymClasses.js";
 import "./GymClassList.css";
 
 export default function GymClassList() {
