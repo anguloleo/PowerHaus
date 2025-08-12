@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       
       Equipment.belongsTo(models.Gym, {
         foreignKey: 'gymId',
+        as: 'gym',
         onDelete: 'CASCADE',
         hooks: true,
       });

@@ -1,8 +1,16 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchRepairRequests, removeRepairRequest } from '../../store/repairRequests';
+import RepairRequestFormModal from '../RepairRequestFormModal';
+import RepairRequestModifyModal from '../RepairRequestModifyModal';
+import OpenModalButton from '../OpenModalButton/OpenModalButton';
+import ConfirmDeleteModal from '../ConfirmDeleteModal';
+
+
+
 
 export default function RepairRequestList() {
+  
   const dispatch = useDispatch();
 
   const repairRequests = useSelector(state => Object.values(state.repairRequests));
@@ -17,28 +25,13 @@ export default function RepairRequestList() {
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
 
-  const handleDelete = (id) => {
-    if (window.confirm('Are you sure you want to delete this repair request?')) {
-      dispatch(removeRepairRequest(id));
-    }
-  };
-
-  // Placeholder for Add New Repair Request action
-  const handleAddNew = () => {
-    // Example: navigate to /repair-requests/new or open a modal
-    console.log('Add new repair request clicked');
-  };
-
-  // Placeholder for Modify action
-  const handleModify = (id) => {
-    // Example: navigate to /repair-requests/:id/edit or open a modal
-    console.log(`Modify repair request ${id} clicked`);
-  };
-
   if (!sortedRequests.length) {
     return (
       <div>
-        <button onClick={handleAddNew}>Add New Repair Request</button>
+        <OpenModalButton
+          buttonText="Add New Repair Request"
+          modalComponent={<RepairRequestFormModal />}
+        />
         <p>No repair requests found.</p>
       </div>
     );
@@ -46,9 +39,10 @@ export default function RepairRequestList() {
 
   return (
     <div>
-      <button onClick={handleAddNew} style={{ marginBottom: '1rem' }}>
-        Add New Repair Request
-      </button>
+      <OpenModalButton
+        buttonText="Add New Repair Request"
+        modalComponent={<RepairRequestFormModal />}
+      />
 
       <h2>
         {currentUser?.role === 'admin' || currentUser?.role === 'staff'
@@ -71,6 +65,9 @@ export default function RepairRequestList() {
               }}
             >
               <p>
+                <strong>Gym:</strong> {request.equipment?.gym?.name || 'Unknown'} 
+              </p>
+              <p>
                 <strong>Equipment:</strong> {request.equipment?.name || 'Unknown'} (Machine #{request.equipment?.id || 'N/A'})
               </p>
 
@@ -89,10 +86,20 @@ export default function RepairRequestList() {
                 <p><small>Updated: {updatedAt.toLocaleString()}</small></p>
               )}
 
-              <button onClick={() => handleModify(request.id)} style={{ marginRight: '0.5rem' }}>
-                Modify
-              </button>
-              <button onClick={() => handleDelete(request.id)}>Delete</button>
+              <OpenModalButton
+                buttonText="Modify"
+                modalComponent={<RepairRequestModifyModal request={request} />}
+              />
+             
+              <OpenModalButton
+                buttonText="Delete"
+                modalComponent={
+                  <ConfirmDeleteModal
+                    message="Are you sure you want to delete this repair request?"
+                    onConfirm={() => dispatch(removeRepairRequest(request.id))}
+                  />
+                }
+              />
             </li>
           );
         })}

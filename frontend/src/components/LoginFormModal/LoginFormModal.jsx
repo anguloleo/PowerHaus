@@ -20,8 +20,23 @@ function LoginFormModal() {
       async (res) => {
         const data = await res.json();
         if (data?.errors) setErrors(data.errors);
-      }
-    );
+      });
+  };
+
+   // Demo Login 
+  const demoLogin = (userCredential, userPassword) => {
+    setCredential(userCredential);
+    setPassword(userPassword);
+    // Dispatch login after state update:
+    // Because setState is async, wait a tick before dispatching login
+    setTimeout(() => {
+      dispatch(sessionActions.login({ credential: userCredential, password: userPassword }))
+        .then(closeModal)
+        .catch(async (res) => {
+          const data = await res.json();
+          if (data?.errors) setErrors(data.errors);
+        });
+    }, 0);
   };
 
   return (
@@ -49,6 +64,24 @@ function LoginFormModal() {
         {errors.credential && <p>{errors.credential}</p>}
         <button type="submit">Log In</button>
       </form>
+
+      <div className="demo-buttons" style={{ marginTop: '1rem' }}>
+        <button
+          type="button"
+          onClick={() => demoLogin('Demolition', 'password')}
+          className="demo-login-button"
+        >
+          Sign In as Admin
+        </button>
+        <button
+          type="button"
+          onClick={() => demoLogin('SlowMoQueen', 'napmaster1')}
+          className="demo-login-button"
+          style={{ marginLeft: '1rem' }}
+        >
+          Sign In as Member
+        </button>
+      </div>
     </>
   );
 }

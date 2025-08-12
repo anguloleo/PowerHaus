@@ -8,7 +8,6 @@ import GymMap from './components/GymMap';
 import GymDetail from './components/GymDetail';
 
 import RepairRequestList from './components/RepairRequestList';
-import RepairRequestForm from './components/RepairRequestForm';
 import RepairRequestDetail from './components/RepairRequestDetail';
 
 
@@ -54,10 +53,6 @@ const router = createBrowserRouter([
       {
         path: '/repair-requests',
         element: <RepairRequestList />
-      },
-      {
-        path: '/repair-requests/new',
-        element: <RepairRequestForm />
       },
       {
         path: '/repair-requests/:requestId',

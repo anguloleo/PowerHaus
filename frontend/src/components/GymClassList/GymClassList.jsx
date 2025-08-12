@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGymClasses } from "../../store/gymClasses.js";
 import "./GymClassList.css";
+import GymClassDetailModal from "../GymClassDetailModal";
 
 export default function GymClassList() {
   const dispatch = useDispatch();
@@ -10,6 +11,9 @@ export default function GymClassList() {
 
   const [currentWeekStart, setCurrentWeekStart] = useState(getStartOfWeek(new Date()));
   const [selectedDate, setSelectedDate] = useState(new Date());
+
+  // State to track selected class for modal
+  const [selectedClassId, setSelectedClassId] = useState(null);
 
   useEffect(() => {
     dispatch(fetchGymClasses());
@@ -27,6 +31,13 @@ export default function GymClassList() {
   return (
     <div className="gym-class-list">
       <h2>Gym Classes</h2>
+
+      {selectedClassId && (
+        <GymClassDetailModal
+          classId={selectedClassId}
+          onClose={() => setSelectedClassId(null)}
+        />
+      )}
 
       <div className="week-nav">
         <button onClick={() => changeWeek(-1)}>← Previous Week</button>
@@ -57,7 +68,12 @@ export default function GymClassList() {
       ) : (
         <ul className="class-list">
           {classesForSelectedDate.map((c) => (
-            <li key={c.id} className="class-card">
+            <li
+              key={c.id}
+              className="class-card"
+              style={{ cursor: "pointer" }}
+              onClick={() => setSelectedClassId(c.id)}
+            >
               <strong>{c.name}</strong> <br />
               {c.time} ({c.duration} min) <br />
               Location: {c.location}

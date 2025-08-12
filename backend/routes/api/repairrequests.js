@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { RepairRequest, Equipment } = require('../../db/models');
+const { RepairRequest, Equipment, Gym } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth'); // Make sure this path is correct
 const equipment = require('../../db/models/equipment');
 
@@ -18,7 +18,12 @@ router.get('/', requireAuth, async (req, res) => {
         include: [{
           model: Equipment,
           as: 'equipment',
-          attributes: ['id', 'name']
+          attributes: ['id', 'name'],
+          include: [{
+            model: Gym,
+            as: 'gym',
+            attributes: ['id', 'name']
+          }]
         }]
       });
     } else {
@@ -28,7 +33,12 @@ router.get('/', requireAuth, async (req, res) => {
          include: [{
           model: Equipment,
           as: 'equipment',
-          attributes: ['id', 'name']
+          attributes: ['id', 'name'],
+          include: [{
+            model: Gym,
+            as: 'gym',
+            attributes: ['id', 'name']
+          }]
         }]
       });
     }
@@ -81,7 +91,7 @@ router.post('/', requireAuth, async (req, res) => {
 // Update a repair request by ID
 router.put('/:id', requireAuth, async (req, res) => {
   try {
-    const { description, status, imageUrl } = req.body;
+    const { equipmentId, description, status, imageUrl } = req.body;
     const repairRequest = await RepairRequest.findByPk(req.params.id);
     if (!repairRequest) return res.status(404).json({ error: 'Repair request not found' });
 
@@ -94,7 +104,7 @@ router.put('/:id', requireAuth, async (req, res) => {
       return res.status(403).json({ error: 'Forbidden' });
     }
 
-    await repairRequest.update({ description, status, imageUrl });
+    await repairRequest.update({ equipmentId, description, status, imageUrl });
     res.json(repairRequest);
   } catch (err) {
     res.status(400).json({ error: 'Failed to update repair request', details: err.message });

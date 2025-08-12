@@ -1,4 +1,3 @@
-// frontend/src/components/OpenModalButton/OpenModalButton.jsx
 
 import { useModal } from '../../context/Modal';
 
