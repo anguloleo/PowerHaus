@@ -25,7 +25,7 @@ export default function GymClassDetailModal({ classId, onClose }) {
     );
 
   // Calculate spots left
-  const spotsLeft = gymClass.capacity - (gymClass.attendees?.length || 0);
+  const spotsLeft = gymClass.capacity - registrations.filter((reg) => reg.gymClassId === gymClass.id).length;
 
   // Check if current user is already signed up for this class
   const userRegistration = registrations.find(

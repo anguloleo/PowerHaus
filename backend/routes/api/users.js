@@ -40,6 +40,7 @@ router.post(
       id: user.id,
       email: user.email,
       username: user.username,
+      role: user.role
     };
 
     await setTokenCookie(res, safeUser);

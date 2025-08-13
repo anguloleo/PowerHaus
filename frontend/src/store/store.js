@@ -14,8 +14,6 @@ const rootReducer = combineReducers({
     gyms: gymReducer,
     repairRequests: repairRequestsReducer,
     equipment: equipmentReducer,
-
-
 });
 
 

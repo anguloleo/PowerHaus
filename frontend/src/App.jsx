@@ -4,9 +4,10 @@ import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import * as sessionActions from './store/session';
 import Navigation from './components/Navigation';
 import GymClassList from './components/GymClassList';
+import GymClassRegistered from './components/GymClassRegistered';
 import GymMap from './components/GymMap'; 
 import GymDetail from './components/GymDetail';
-
+import ImageCarousel from './components/ImageCarousel';
 import RepairRequestList from './components/RepairRequestList';
 import RepairRequestDetail from './components/RepairRequestDetail';
 
@@ -36,11 +37,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <h1>Welcome!</h1>
+        element: <ImageCarousel />
       },
       {
         path: '/classes',
         element: <GymClassList />
+      },
+      {
+        path: '/my-classes',
+        element: <GymClassRegistered />
       },
       {
         path: '/gyms', 
@@ -57,7 +62,8 @@ const router = createBrowserRouter([
       {
         path: '/repair-requests/:requestId',
         element: <RepairRequestDetail />
-      }
+      },
+
     ]
   }
 ]);

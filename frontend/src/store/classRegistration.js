@@ -23,13 +23,17 @@ export const deleteRegistration = (registrationId) => ({
 
 // Thunks
 
-// Fetch all registrations (could also make one scoped to userId)
+// Fetch all registrations from current user
 export const fetchClassRegistrations = () => async (dispatch) => {
   const res = await fetch('/api/class-registrations');
 
   if (res.ok) {
     const data = await res.json();
-    dispatch(loadRegistrations(data.Registrations || data));
+
+    console.log("API registrations data:", data);
+    const registrationArray = data.Registrations || [];
+
+   dispatch(loadRegistrations(registrationArray));
   }
 };
 
@@ -71,7 +75,9 @@ const initialState = {
 // Reducer
 const classRegistrationReducer = (state = initialState, action) => {
   switch (action.type) {
+    
     case LOAD_REGISTRATIONS: {
+      console.log("LOAD_REGISTRATIONS payload:", action.registrations);
       const normalized = {};
       action.registrations.forEach((reg) => {
         normalized[reg.id] = reg;

@@ -52,6 +52,17 @@ function ProfileButton({ user }) {
             <li>{user.username}</li>
             <li>{user.firstName} {user.lastName}</li>
             <li>{user.email}</li>
+
+            {user.role === 'member' && (
+              <li>
+                <Link to="/my-classes" onClick={closeMenu}>
+                  My Classes
+                </Link>
+              </li>
+            )}
+
+
+
             <li>
               <Link to="/repair-requests" onClick={closeMenu}>
                 Repair Request

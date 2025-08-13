@@ -75,7 +75,7 @@ router.put('/:id', requireAuth, validateGymClass, async (req, res) => {
 });
 
 // DELETE /api/gym-classes/:id - delete class by ID
-router.delete('/:id', requireAuth, validateGymClass, async (req, res) => {
+router.delete('/:id', requireAuth, async (req, res) => {
   try {
     const gymClass = await GymClass.findByPk(req.params.id);
     if (!gymClass) {
