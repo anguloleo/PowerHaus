@@ -5,7 +5,8 @@ const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
 
 
-const { GymClass } = require('../../db/models'); 
+const { GymClass, Gym, User } = require('../../db/models'); 
+
 
 const validateGymClass = [
   check('name')
@@ -23,10 +24,16 @@ const validateGymClass = [
   handleValidationErrors
 ];
 
-// GET /api/gym-classes - list all classes
+//GET ALL CLASSES
+// GET /api/classes 
 router.get('/', async (req, res) => {
   try {
-    const classes = await GymClass.findAll();
+    const classes = await GymClass.findAll({
+      include: [
+        { model: Gym, as: 'gym' },
+        { model: User, as: 'instructor' }
+      ],
+    });
     res.json({ GymClasses: classes });
   } catch (err) {
     console.error(err);
@@ -34,21 +41,32 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET /api/gym-classes/:id - get single class by ID
+// GET SINGLE CLASS
+// GET /api/classes/:id
 router.get('/:id', async (req, res) => {
   try {
-    const gymClass = await GymClass.findByPk(req.params.id);
+    const gymClass = await GymClass.findByPk(req.params.id, {
+      include: [
+        { model: Gym, as: 'gym' },
+        { model: User, as: 'instructor' }
+      ],
+    });
+
+
     if (!gymClass) {
       return res.status(404).json({ message: 'Class not found' });
     }
-    res.json(gymClass);
+
+    res.json({ gymClass });
+
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server error fetching class' });
   }
 });
 
-// POST /api/gym-classes - create new class
+//CREATE CLASS
+// POST /api/classes 
 router.post('/', requireAuth, validateGymClass, async (req, res) => {
   try {
     const newClass = await GymClass.create(req.body);
@@ -59,7 +77,8 @@ router.post('/', requireAuth, validateGymClass, async (req, res) => {
   }
 });
 
-// PUT /api/gym-classes/:id - update class by ID
+//UPDATE CLASS
+// PUT /api/classes/:id 
 router.put('/:id', requireAuth, validateGymClass, async (req, res) => {
   try {
     const gymClass = await GymClass.findByPk(req.params.id);
@@ -74,7 +93,8 @@ router.put('/:id', requireAuth, validateGymClass, async (req, res) => {
   }
 });
 
-// DELETE /api/gym-classes/:id - delete class by ID
+//DELETE CLASS
+// DELETE /api/classes/:id 
 router.delete('/:id', requireAuth, async (req, res) => {
   try {
     const gymClass = await GymClass.findByPk(req.params.id);

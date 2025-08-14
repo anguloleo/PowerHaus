@@ -1,11 +1,12 @@
 const express = require('express');
 const { requireAuth } = require('../../utils/auth'); 
-const { Gym, Equipment } = require('../../db/models');
+const { Gym, GymClass, Equipment } = require('../../db/models');
 
 
 const router = express.Router();
 
-// GET /api/gyms - Get all gyms
+//GET ALL GYMS
+// /api/gyms 
 router.get('/', async (req, res) => {
   try {
     const gyms = await Gym.findAll();
@@ -16,7 +17,8 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET /api/gyms/:id - Get gym by ID
+// GET SINGLE GYM
+//  /api/gyms/:id 
 router.get('/:id', async (req, res) => {
   try {
     const gym = await Gym.findByPk(req.params.id);
@@ -28,7 +30,8 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST /api/gyms - Create gym (protected)
+// CREATE GYM
+//  /api/gyms
 router.post('/', requireAuth, async (req, res) => {
   try {
     const { name, address, city, state, zip, latitude, longitude, telephone, hours } = req.body;
@@ -43,7 +46,8 @@ router.post('/', requireAuth, async (req, res) => {
   }
 });
 
-// PUT /api/gyms/:id - Update gym (protected)
+// UPDATE GYM
+//  /api/gyms/:id
 router.put('/:id', requireAuth, async (req, res) => {
   try {
     const gym = await Gym.findByPk(req.params.id);
@@ -59,7 +63,8 @@ router.put('/:id', requireAuth, async (req, res) => {
   }
 });
 
-// DELETE /api/gyms/:id - Delete gym (protected)
+//DELETE GYM
+// /api/gyms/:id 
 router.delete('/:id', requireAuth, async (req, res) => {
   try {
     const gym = await Gym.findByPk(req.params.id);
@@ -97,6 +102,14 @@ router.get('/:gymId/equipment', async (req, res) => {
     console.error(err);
     return res.status(500).json({ message: "Failed to get equipment" });
   }
+});
+
+// GET ALL CLASSES FROM A GYM
+// /api/gyms/:gymId/classes
+router.get('/:gymId/classes', async (req, res) => {
+  const { gymId } = req.params;
+  const classes = await GymClass.findAll({ where: { gymId } });
+  res.json({ GymClasses: classes });
 });
 
 module.exports = router;

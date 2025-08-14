@@ -1,29 +1,33 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchGymClasses } from "../../store/gymClasses.js";
+import { useParams } from "react-router-dom";
+import { fetchGymClassesByGymId } from "../../store/gymClasses.js";
 import "./GymClassList.css";
 import GymClassDetailModal from "../GymClassDetailModal";
 
 export default function GymClassList() {
   const dispatch = useDispatch();
-  const classes = useSelector((state) => Object.values(state.gymClasses.entries || {}));
+  const { gymId } = useParams();
+
+  const classes = useSelector((state) =>
+    Object.values(state.gymClasses.entries || {})
+  );
   const isLoading = useSelector((state) => state.gymClasses.isLoading);
 
   const [currentWeekStart, setCurrentWeekStart] = useState(getStartOfWeek(new Date()));
   const [selectedDate, setSelectedDate] = useState(new Date());
-
-  // State to track selected class for modal
   const [selectedClassId, setSelectedClassId] = useState(null);
 
   useEffect(() => {
-    dispatch(fetchGymClasses());
-  }, [dispatch]);
+    dispatch(fetchGymClassesByGymId(gymId));
+  }, [dispatch, gymId]);
 
   if (isLoading) return <p>Loading classes...</p>;
 
   const weekDays = getWeekDays(currentWeekStart);
   const selectedDateString = formatDate(selectedDate);
 
+  // Filter by date
   const classesForSelectedDate = classes.filter(
     (gymClass) => gymClass.date === selectedDateString
   );

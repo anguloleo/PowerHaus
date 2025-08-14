@@ -1,14 +1,20 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGymClass } from "../../store/gymClasses.js";
 import { createClassRegistration } from "../../store/classRegistration.js";
 import "./GymClassDetailModal.css";
 
+
+
 export default function GymClassDetailModal({ classId, onClose }) {
   const dispatch = useDispatch();
   const gymClass = useSelector((state) => state.gymClasses.entries[classId]);
   const currentUser = useSelector((state) => state.session.user);
-  const registrations = useSelector((state) => Object.values(state.classRegistration.entries));
+  const registrations = useSelector((state) => state.classRegistration.entries);
+  const registrationList = useMemo(
+    () => Object.values(registrations),
+    [registrations]
+  );
 
   useEffect(() => {
     if (!gymClass) dispatch(fetchGymClass(classId));
@@ -25,10 +31,10 @@ export default function GymClassDetailModal({ classId, onClose }) {
     );
 
   // Calculate spots left
-  const spotsLeft = gymClass.capacity - registrations.filter((reg) => reg.gymClassId === gymClass.id).length;
+  const spotsLeft = gymClass.capacity - registrationList.filter((reg) => reg.gymClassId === gymClass.id).length;
 
   // Check if current user is already signed up for this class
-  const userRegistration = registrations.find(
+  const userRegistration = registrationList.find(
     (reg) => reg.userId === currentUser?.id && reg.gymClassId === gymClass.id
   );
 
@@ -54,16 +60,21 @@ export default function GymClassDetailModal({ classId, onClose }) {
     }
   };
 
+  console.log("Gym Class Object:", gymClass);
+
   return (
+    
     <div className="modal" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div className="modal-content">
         <h2>{gymClass.name}</h2>
         <p>Date: {gymClass.date}</p>
         <p>Time: {gymClass.time}</p>
         <p>Duration: {gymClass.duration} minutes</p>
+        <p>Gym: {gymClass.gym.name || "Unknown Gym"}</p>
         <p>Location: {gymClass.location}</p>
         <p>Description: {gymClass.description}</p>
-        <p>Instructor: {gymClass.instructor}</p>
+        
+        <p>Instructor: {gymClass.instructor.firstName || "TBA"}</p>
         <p>Capacity: {gymClass.capacity}</p>
         <p>Spots left: {spotsLeft}</p>
 

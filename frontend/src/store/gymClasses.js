@@ -27,7 +27,11 @@ export const deleteGymClass = (gymClassId) => ({
   gymClassId
 });
 
-// Thunks
+
+
+// THUNKS
+
+//Fetch all classes
 export const fetchGymClasses = () => async (dispatch) => {
   const res = await fetch('/api/classes');
 
@@ -37,15 +41,27 @@ export const fetchGymClasses = () => async (dispatch) => {
   }
 };
 
+//Fetch all classes by gym
+export const fetchGymClassesByGymId = (gymId) => async (dispatch) => {
+  const res = await fetch(`/api/gyms/${gymId}/classes`);
+
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(loadGymClasses(data.GymClasses || data));
+  }
+};
+
+//Fetch single class
 export const fetchGymClass = (id) => async (dispatch) => {
   const res = await fetch(`/api/classes/${id}`);
 
   if (res.ok) {
     const data = await res.json();
-    dispatch(loadGymClass(data));
+    dispatch(loadGymClass(data.gymClass));
   }
 };
 
+//create gym class
 export const createGymClass = (newClass) => async (dispatch) => {
   const res = await csrfFetch('/api/classes', {
     method: 'POST',
@@ -63,6 +79,7 @@ export const createGymClass = (newClass) => async (dispatch) => {
   }
 };
 
+//Delete gym class
 export const removeGymClass = (id) => async (dispatch) => {
   const res = await csrfFetch(`/api/classes/${id}`, {
     method: 'DELETE'
@@ -73,11 +90,14 @@ export const removeGymClass = (id) => async (dispatch) => {
   }
 };
 
+
+
 // Reducer
 const initialState = { entries: {}, isLoading: true };
 
 const gymClassReducer = (state = initialState, action) => {
   switch (action.type) {
+    
     case LOAD_GYM_CLASSES: {
       const normalized = {};
       action.classes.forEach(gymClass => {
@@ -87,6 +107,7 @@ const gymClassReducer = (state = initialState, action) => {
     }
 
     case LOAD_GYM_CLASS: {
+      console.log("Loaded class:", action.gymClass);
       return {
         ...state,
         entries: {

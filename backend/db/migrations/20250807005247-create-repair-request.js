@@ -39,7 +39,7 @@ module.exports = {
       status: {
         type: Sequelize.ENUM('Open', 'In Progress', 'Resolved'),
         allowNull: false,
-        defaultValue: 'open'
+        defaultValue: 'Open'
       },
       imageUrl: {
         type: Sequelize.STRING,

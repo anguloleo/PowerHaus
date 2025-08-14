@@ -21,8 +21,8 @@ module.exports = (sequelize, DataTypes) => {
 
       // Instructor for Gym Class
       User.hasMany(models.GymClass, {
-        foreignKey: 'instructorId',
-        as: 'TaughtClasses'
+        as: 'InstructedClasses',
+        foreignKey: 'instructorId'
       });
 
       User.hasMany(models.RepairRequest, {

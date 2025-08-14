@@ -8,11 +8,12 @@ module.exports = (sequelize, DataTypes) => {
 
       //Class belongs to gym
       GymClass.belongsTo(models.Gym, { 
+        as: 'gym',
         foreignKey: 'gymId' });
       
       //Class is taught by user (instructor)
       GymClass.belongsTo(models.User, {
-        as: 'Instructor', 
+        as: 'instructor', 
         foreignKey: 'instructorId'
       });
 

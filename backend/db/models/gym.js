@@ -6,7 +6,8 @@ module.exports = (sequelize, DataTypes) => {
   
     static associate(models) {
 
-      Gym.hasMany(models.GymClass, { 
+      Gym.hasMany(models.GymClass, {
+        as: 'classes', 
         foreignKey: 'gymId' 
       });
 

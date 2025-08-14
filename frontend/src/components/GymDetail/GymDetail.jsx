@@ -9,6 +9,7 @@ import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
 import iconUrl from 'leaflet/dist/images/marker-icon.png';
 import shadowUrl from 'leaflet/dist/images/marker-shadow.png';
 import { useMap } from 'react-leaflet'
+import GymClassList from '../GymClassList/GymClassList';
 
 
 delete L.Icon.Default.prototype._getIconUrl;
@@ -68,6 +69,11 @@ const GymDetail = () => {
           <ChangeView center={[gym.latitude, gym.longitude]} zoom={15} />
         </MapContainer>
       </div>
+
+      <div className="gym-classes-section">
+        <GymClassList />
+      </div>
+
     </div>
   );
 };
