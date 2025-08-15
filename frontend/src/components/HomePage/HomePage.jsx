@@ -1,6 +1,6 @@
-
 import ImageCarousel from "../ImageCarousel";
 import "./HomePage.css";
+import { Link } from "react-router-dom";
 
 export default function HomePage() {
   return (
@@ -18,7 +18,9 @@ export default function HomePage() {
           </p>
           <div className="cta-buttons">
             <button className="btn-primary">Join Now</button>
+            <Link to="/classes/all">
             <button className="btn-secondary">View Classes</button>
+            </Link>
           </div>
         </div>
         <div className="hero-carousel">

@@ -1,37 +1,40 @@
+/* Container for profile button */
 .profile-button-container {
   position: relative;
   display: inline-block;
 }
 
+/* Profile icon button */
 .profile-icon-btn {
   background: transparent;
   border: none;
   cursor: pointer;
-  color: #FF5A2A; /* Orange accent icon */
-  transition: transform 0.2s, text-shadow 0.2s, box-shadow 0.2s;
+  color: #FF5A2A; /* Vibrant Orange icon */
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .profile-icon-btn:hover {
-  transform: scale(1.1);
+  transform: scale(1.15);
   color: #FF5A2A;
 }
 
 .profile-icon-btn.active {
-  transform: scale(1.1);
+  transform: scale(1.15);
   box-shadow: 0 0 12px #FF5A2A, 0 0 20px rgba(255, 90, 42, 0.5);
   border-radius: 50%;
 }
 
-.profile-dropdown {
+/* Dropdown menu */
+.profile-button-dropdown {
   position: absolute;
   top: 120%;
   right: 0;
   background-color: #0A1A2F; /* Deep Navy Blue */
   color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-  width: 220px;
-  padding: 10px 0;
+  border-radius: 14px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+  width: 240px;
+  padding: 12px 0;
   opacity: 0;
   transform: translateY(-10px);
   pointer-events: none;
@@ -39,62 +42,86 @@
   z-index: 50;
 }
 
-/* Arrow Pointer */
-.profile-dropdown::before {
+/* Dropdown arrow */
+.profile-button-dropdown::before {
   content: '';
   position: absolute;
-  top: -8px;
-  right: 16px;
-  border-width: 0 8px 8px 8px;
+  top: -10px;
+  right: 20px;
+  border-width: 0 10px 10px 10px;
   border-style: solid;
   border-color: transparent transparent #0A1A2F transparent;
 }
 
-.profile-dropdown.active {
+/* Active state */
+.profile-button-dropdown.active {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
 }
 
-.profile-dropdown li {
+/* Dropdown items (li, links, buttons, modal items) */
+.profile-button-dropdown li,
+.profile-button-dropdown a,
+.profile-button-dropdown button,
+.profile-button-dropdown .open-modal-menu-item {
   list-style: none;
-  padding: 12px 20px;
+  padding: 14px 24px;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  color: #fff !important;
+  background: transparent !important;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: all 0.2s ease-in-out;
+  border-radius: 8px;
 }
 
-.profile-dropdown li:hover,
-.profile-link:hover,
-.logout-btn:hover {
-  background-color: #FF5A2A; /* Orange accent hover */
-  color: #fff;
+/* Hover effect for all dropdown items — no box-shadow */
+.profile-button-dropdown li:hover,
+.profile-button-dropdown a:hover,
+.profile-button-dropdown button:hover,
+.profile-button-dropdown .open-modal-menu-item:hover {
+  background-color: #FF5A2A;
+  color: #fff !important;
+  transform: scale(1.02);
+  font-weight: 600;
+  box-shadow: none; /* removed glowing shadow */
 }
 
-.profile-name {
+/* User info */
+.profile-button-dropdown .profile-name {
   font-weight: bold;
   padding-bottom: 4px;
   border-bottom: 1px solid rgba(255,255,255,0.2);
   margin-bottom: 8px;
 }
 
-.profile-info {
-  font-size: 0.9rem;
+.profile-button-dropdown .profile-info {
+  font-size: 0.95rem;
   color: #ccc;
+  padding: 4px 24px;
 }
 
-.profile-link {
+/* Links inside dropdown */
+.profile-button-dropdown .profile-link {
   color: #fff;
   text-decoration: none;
-  display: block;
 }
 
-.logout-btn {
-  width: 100%;
+/* Logout button */
+.profile-button-dropdown .logout-btn {
   background: transparent;
   border: none;
   color: #fff;
   text-align: left;
-  padding: 12px 20px;
+  padding: 14px 24px;
   cursor: pointer;
+  width: 100%;
   font-weight: 500;
+  font-size: 1rem;
+  border-radius: 8px;
 }

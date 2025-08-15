@@ -1,6 +1,6 @@
 const express = require('express');
 const { requireAuth } = require('../../utils/auth'); 
-const { Gym, GymClass, Equipment } = require('../../db/models');
+const { Gym, GymClass, Equipment, User } = require('../../db/models');
 
 
 const router = express.Router();
@@ -107,9 +107,22 @@ router.get('/:gymId/equipment', async (req, res) => {
 // GET ALL CLASSES FROM A GYM
 // /api/gyms/:gymId/classes
 router.get('/:gymId/classes', async (req, res) => {
-  const { gymId } = req.params;
-  const classes = await GymClass.findAll({ where: { gymId } });
-  res.json({ GymClasses: classes });
+  try{
+    const { gymId } = req.params;
+
+    const classes = await GymClass.findAll({ 
+      where: { gymId },
+      include: [
+        { model: Gym, as: 'gym' },
+        { model: User, as: 'instructor' }
+      ]
+    });
+
+    res.json({ GymClasses: classes });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to get classes" });
+  }
 });
 
 module.exports = router;

@@ -72,7 +72,7 @@ export default function GymClassListAll() {
               <p><strong>Date:</strong> {gymClass.date}</p>
               <p><strong>Start Time:</strong> {gymClass.time}</p>
               <p><strong>Duration:</strong> {gymClass.duration} min</p>
-              <p><strong>Instructor:</strong> {gymClass.instructor?.name || "TBA"}</p>
+              <p><strong>Instructor:</strong> {gymClass.instructor?.firstName || "TBA"}</p>
               <p><strong>Location:</strong> {gymClass.location || "TBA"}</p>
             </div>
           ))

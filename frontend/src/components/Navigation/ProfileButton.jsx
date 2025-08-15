@@ -39,7 +39,7 @@ function ProfileButton({ user }) {
     closeMenu();
   };
 
-  const ulClassName = `profile-dropdown ${showMenu ? "active" : ""}`;
+  const ulClassName = `profile-button-dropdown ${showMenu ? "active" : ""}`;
 
   return (
     <div className="profile-button-container">
