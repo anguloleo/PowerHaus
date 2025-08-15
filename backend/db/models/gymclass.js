@@ -34,6 +34,15 @@ module.exports = (sequelize, DataTypes) => {
 
 
   GymClass.init({
+    gymId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Gyms',
+        key: 'id'
+      },
+      onDelete: 'CASCADE'
+    },
    instructorId: {
       type: DataTypes.INTEGER,
       allowNull: true,
@@ -66,15 +75,6 @@ module.exports = (sequelize, DataTypes) => {
     capacity: {
       type: DataTypes.INTEGER,
       allowNull: false
-    },
-    gymId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'Gyms',
-        key: 'id'
-      },
-      onDelete: 'CASCADE'
     },
     location: {
       type: DataTypes.STRING,

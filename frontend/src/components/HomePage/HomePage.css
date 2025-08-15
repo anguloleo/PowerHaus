@@ -1,0 +1,126 @@
+.homepage {
+  font-family: 'Arial', sans-serif;
+  background-color: #0A1A2F;
+  color: white;
+}
+
+.homepage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #0A1A2F;
+  border-bottom: 2px solid #FF5A2A;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 50px;
+  margin-right: 0.5rem;
+}
+
+.site-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #FF5A2A;
+}
+
+.nav-links a {
+  margin-left: 1rem;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+.nav-links a:hover {
+  color: #FF5A2A;
+}
+
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2rem;
+  align-items: center;
+  background-color: #0A1A2F;
+}
+
+.hero-text {
+  flex: 1;
+  min-width: 300px;
+}
+
+.hero-text h2 {
+  font-size: 2.5rem;
+  color: #FF5A2A;
+}
+
+.hero-text p {
+  margin: 1rem 0;
+}
+
+.cta-buttons {
+  margin-top: 1rem;
+}
+
+.btn-primary {
+  background-color: #FF5A2A;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  margin-right: 0.5rem;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  border: 2px solid #FF5A2A;
+  padding: 0.75rem 1.5rem;
+  color: #FF5A2A;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #e14f24;
+}
+
+.btn-secondary:hover {
+  background-color: #FF5A2A;
+  color: white;
+}
+
+.hero-carousel {
+  flex: 1;
+  min-width: 300px;
+  margin-top: 1rem;
+}
+
+.features {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 2rem;
+  background-color: #0F223A;
+}
+
+.feature {
+  max-width: 250px;
+  margin: 1rem;
+  text-align: center;
+}
+
+.feature h3 {
+  color: #FF5A2A;
+}
+
+.homepage-footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #0A1A2F;
+  border-top: 2px solid #FF5A2A;
+}

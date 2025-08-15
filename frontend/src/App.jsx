@@ -4,10 +4,11 @@ import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import * as sessionActions from './store/session';
 import Navigation from './components/Navigation';
 import GymClassList from './components/GymClassList';
+import GymClassListAll from './components/GymClassListAll';
 import GymClassRegistered from './components/GymClassRegistered';
 import GymMap from './components/GymMap'; 
 import GymDetail from './components/GymDetail';
-import ImageCarousel from './components/ImageCarousel';
+import HomePage from './components/HomePage';
 import RepairRequestList from './components/RepairRequestList';
 import RepairRequestDetail from './components/RepairRequestDetail';
 
@@ -37,11 +38,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <ImageCarousel />
+        element: <HomePage />
       },
       {
         path: '/classes',
         element: <GymClassList />
+      },
+      {
+        path: '/classes/all',
+        element: <GymClassListAll />
       },
       {
         path: '/my-classes',

@@ -1,36 +1,8 @@
-
-
+/* --- General Reset --- */
 ul {
   list-style: none;
   margin: 0;
   padding: 0;
-}
-
-.profile-dropdown {
-  position: absolute;
-  right: 10px;
-  top: 50px;
-  background-color: white;
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  z-index: 1000;
-}
-
-.profile-dropdown li {
-  margin: 5px 0;
-  cursor: pointer;
-}
-
-.profile-dropdown button {
-  all: unset;
-  cursor: pointer;
-  color: #0077cc;
-}
-
-.hidden {
-  display: none;
 }
 
 button {
@@ -39,27 +11,65 @@ button {
   cursor: pointer;
 }
 
-
+/* --- Navigation Bar --- */
 .navigation-container {
   display: flex;
-  justify-content: space-between; /* or flex-end if only ProfileButton exists */
+  justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  background-color: #0A1A2F; /* Deep Navy */
+  padding: 0.75rem 2rem;
+  border-bottom: 2px solid #FF5A2A; /* Vibrant Orange */
   position: relative;
 }
 
-.navigation-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+/* Left Side (Logo + Links) */
+.nav-left {
   display: flex;
-  gap: 20px;
+  align-items: center;
 }
 
+.logo-section {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  margin-right: 2rem;
+}
+
+.logo {
+  height: 45px;
+  margin-right: 0.5rem;
+}
+
+.site-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #FF5A2A;
+}
+
+/* Nav Links */
+.nav-links {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.nav-links li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s ease-in-out;
+}
+
+.nav-links li a:hover,
+.nav-links li a.active {
+  color: #FF5A2A;
+}
+
+/* Right Side (Profile Button) */
 .profile-container {
   position: relative;
 }
 
+/* --- Profile Dropdown --- */
 .profile-dropdown {
   position: absolute;
   right: 0;
@@ -87,8 +97,9 @@ button {
   display: none;
 }
 
-button {
-  background: none;
-  border: none;
-  cursor: pointer;
+/* --- Mobile --- */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none; /* hide links on small screens until we add hamburger */
+  }
 }

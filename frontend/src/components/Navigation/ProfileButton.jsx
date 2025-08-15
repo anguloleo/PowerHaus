@@ -1,11 +1,12 @@
-import { useState, useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { FaUserCircle } from 'react-icons/fa';
-import * as sessionActions from '../../store/session';
-import OpenModalMenuItem from './OpenModalMenuItem';
-import LoginFormModal from '../LoginFormModal';
-import SignupFormModal from '../SignupFormModal';
-import { Link } from 'react-router-dom';
+import { useState, useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
+import { HiOutlineUserCircle } from "react-icons/hi2";
+import * as sessionActions from "../../store/session";
+import OpenModalMenuItem from "./OpenModalMenuItem";
+import LoginFormModal from "../LoginFormModal";
+import SignupFormModal from "../SignupFormModal";
+import { Link } from "react-router-dom";
+import "./ProfileButton.css";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ function ProfileButton({ user }) {
   const ulRef = useRef();
 
   const toggleMenu = (e) => {
-    e.stopPropagation(); 
+    e.stopPropagation();
     setShowMenu(!showMenu);
   };
 
@@ -26,8 +27,7 @@ function ProfileButton({ user }) {
       }
     };
 
-    document.addEventListener('click', closeMenu);
-
+    document.addEventListener("click", closeMenu);
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
@@ -39,37 +39,36 @@ function ProfileButton({ user }) {
     closeMenu();
   };
 
-  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
+  const ulClassName = `profile-dropdown ${showMenu ? "active" : ""}`;
 
   return (
-    <>
-      <button onClick={toggleMenu}>
-        <FaUserCircle />
+    <div className="profile-button-container">
+      <button onClick={toggleMenu}   className={`profile-icon-btn ${showMenu ? "active" : ""}`}
+>
+        <HiOutlineUserCircle size={34} />
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
-            <li>{user.email}</li>
+            <li className="profile-name">{user.username}</li>
+            <li className="profile-info">{user.firstName} {user.lastName}</li>
+            <li className="profile-info">{user.email}</li>
 
-            {user.role === 'member' && (
+            {user.role === "member" && (
               <li>
-                <Link to="/my-classes" onClick={closeMenu}>
+                <Link to="/my-classes" onClick={closeMenu} className="profile-link">
                   My Classes
                 </Link>
               </li>
             )}
 
-
-
             <li>
-              <Link to="/repair-requests" onClick={closeMenu}>
+              <Link to="/repair-requests" onClick={closeMenu} className="profile-link">
                 Repair Request
               </Link>
             </li>
             <li>
-              <button onClick={logout}>Log Out</button>
+              <button onClick={logout} className="logout-btn">Log Out</button>
             </li>
           </>
         ) : (
@@ -87,7 +86,7 @@ function ProfileButton({ user }) {
           </>
         )}
       </ul>
-    </>
+    </div>
   );
 }
 
