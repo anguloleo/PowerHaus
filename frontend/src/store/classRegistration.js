@@ -38,11 +38,11 @@ export const fetchClassRegistrations = () => async (dispatch) => {
 };
 
 // Create a new registration (user enrolling in a class)
-export const createClassRegistration = ({ userId, gymClassId }) => async (dispatch) => {
+export const createClassRegistration = ({ gymClassId }) => async (dispatch) => {
   const res = await csrfFetch('/api/class-registrations', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ userId, gymClassId })
+    body: JSON.stringify({ gymClassId })
   });
 
   if (res.ok) {

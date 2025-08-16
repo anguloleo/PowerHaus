@@ -3,15 +3,31 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGyms } from "../../store/gyms";
 import { fetchGymClassesByGymId } from "../../store/gymClasses";
+import { createClassRegistration, removeClassRegistration, fetchClassRegistrations } from "../../store/classRegistration";
 import "./GymClassListAll.css";
+
+
 
 export default function GymClassListAll() {
   const dispatch = useDispatch();
+  const sessionUser = useSelector(state => state.session.user);
+  const registrations = useSelector(state => Object.values(state.classRegistrations?.entries || {}));
   const gyms = useSelector(state => Object.values(state.gyms.all));
   const classes = useSelector(state => Object.values(state.gymClasses.entries));
   
   const [selectedGymId, setSelectedGymId] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
+
+  useEffect(() => {
+    if (sessionUser) {
+      dispatch(fetchClassRegistrations());
+    }
+  }, [dispatch, sessionUser]);
+
+  const isRegistered = (gymClassId) => {
+  return registrations.some(reg => reg.gymClassId === gymClassId && reg.userId === sessionUser?.id);
+  };
+
 
   useEffect(() => {
     dispatch(fetchGyms());
@@ -31,6 +47,34 @@ export default function GymClassListAll() {
   const handleDateChange = (e) => {
     setSelectedDate(e.target.value);
   };
+
+  const handleRegister = async (gymClassId) => {
+  if (!sessionUser) {
+    alert("You must be logged in to register for a class.");
+    return;
+  }
+   try {
+    await dispatch(createClassRegistration({ gymClassId }));
+    alert("Registered successfully!");
+    
+  } catch (err) {
+    alert(err.message);
+  }
+};
+
+  const handleUnregister = async (gymClassId) => {
+    const reg = registrations.find(
+      r => r.gymClassId === gymClassId && r.userId === sessionUser.id
+    );
+    if (!reg) return;
+
+    try {
+      await dispatch(removeClassRegistration(reg.id));
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
 
   // Filter classes by selected date
   const filteredClasses = selectedDate
@@ -74,6 +118,12 @@ export default function GymClassListAll() {
               <p><strong>Duration:</strong> {gymClass.duration} min</p>
               <p><strong>Instructor:</strong> {gymClass.instructor?.firstName || "TBA"}</p>
               <p><strong>Location:</strong> {gymClass.location || "TBA"}</p>
+
+              {isRegistered(gymClass.id) ? (
+                <button onClick={() => handleUnregister(gymClass.id)}>Unregister</button>
+              ) : (
+                <button onClick={() => handleRegister(gymClass.id)}>Register</button>
+              )}
             </div>
           ))
         ) : (
