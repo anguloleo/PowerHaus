@@ -65,11 +65,7 @@ function ProfileButton({ user }) {
                 Repair Request
               </Link>
             </li>
-            <li>
-              <Link to="/my-classes" onClick={closeMenu} className="profile-link">
-                My Classes
-              </Link>
-            </li>
+
             <li>
               <button onClick={logout} className="logout-btn">Log Out</button>
             </li>

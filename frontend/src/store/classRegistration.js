@@ -68,7 +68,7 @@ export const removeClassRegistration = (id) => async (dispatch) => {
 
 // Initial state
 const initialState = {
-  entries: {}, // normalized: { [id]: { id, userId, gymClassId, ... } }
+  entries: {}, 
   isLoading: true
 };
 
@@ -77,7 +77,6 @@ const classRegistrationReducer = (state = initialState, action) => {
   switch (action.type) {
     
     case LOAD_REGISTRATIONS: {
-      console.log("LOAD_REGISTRATIONS payload:", action.registrations);
       const normalized = {};
       action.registrations.forEach((reg) => {
         normalized[reg.id] = reg;

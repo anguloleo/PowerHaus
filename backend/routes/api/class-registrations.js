@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { requireAuth } = require('../../utils/auth');
-const { ClassRegistration, GymClass } = require('../../db/models');
+const { ClassRegistration, GymClass, User } = require('../../db/models');
 
 
 // Get all registrations for the current user
@@ -10,7 +10,11 @@ router.get('/', requireAuth, async (req, res) => {
     const userId = req.user.id;
     const registrations = await ClassRegistration.findAll({ 
       where: { userId },
-      include: [{ model: GymClass }],
+      attributes: ['id', 'userId', 'gymClassId', 'createdAt', 'updatedAt'],
+      include: [{ model: GymClass,
+      attributes: ['id', 'name', 'date', 'time', 'capacity', 'location', 'description'],
+      include: [{ model: User, as: 'instructor', attributes: ['id', 'firstName', 'lastName'] }]
+       }],
     });
     return res.json({ Registrations: registrations });
   } catch (err) {

@@ -1,24 +1,18 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchClassRegistrations } from '../../store/classRegistration';
-import { fetchGymClasses } from '../../store/gymClasses';
 
 const GymClassRegistered = () => {
   const dispatch = useDispatch();
 
-  // Load registrations and gym classes on mount
   useEffect(() => {
     dispatch(fetchClassRegistrations());
-    dispatch(fetchGymClasses());
   }, [dispatch]);
 
-  // Select registrations and gym classes from Redux store
   const registrations = useSelector(state => Object.values(state.classRegistration.entries));
-  const gymClasses = useSelector(state => state.gymClasses.entries);
-  const isLoadingRegs = useSelector(state => state.classRegistration.isLoading);
-  const isLoadingClasses = useSelector(state => state.gymClasses.isLoading);
+  const isLoading = useSelector(state => state.classRegistration.isLoading);
 
-  if (isLoadingRegs || isLoadingClasses) {
+  if (isLoading) {
     return <div>Loading your registered classes...</div>;
   }
 
@@ -26,25 +20,35 @@ const GymClassRegistered = () => {
     return <div>You have not registered for any classes yet.</div>;
   }
 
-const uniqueGymClassIds = [...new Set(registrations.map(reg => reg.gymClassId))];
-
-const registeredClasses = uniqueGymClassIds
-  .map(id => gymClasses[id])
-  .filter(gymClass => gymClass);
-
   return (
     <div>
       <h2>Your Registered Classes</h2>
       <ul>
-        {registeredClasses.map(gymClass => (
-          <li key={gymClass.id} style={{ marginBottom: '1rem', border: '1px solid #ccc', padding: '0.5rem' }}>
-            <h3>{gymClass.name}</h3>
-            <p><strong>Instructor:</strong> {gymClass.instructorName || 'N/A'}</p>
-            <p><strong>Location:</strong> {gymClass.location || 'N/A'}</p>
-            <p><strong>Time:</strong> {gymClass.startTime ? new Date(gymClass.startTime).toLocaleString() : 'TBD'}</p>
-            <p><strong>Description:</strong> {gymClass.description || 'No description available.'}</p>
-          </li>
-        ))}
+        {registrations.map(reg => {
+          const gymClass = reg.GymClass; 
+          return (
+            <li
+              key={reg.id}
+              style={{ marginBottom: '1rem', border: '1px solid #ccc', padding: '0.5rem' }}
+            >
+              <h3>{gymClass?.name}</h3>
+              <p>
+                <strong>Instructor:</strong>{' '}
+                {gymClass?.instructor
+                  ? `${gymClass.instructor.firstName} ${gymClass.instructor.lastName}`
+                  : 'N/A'}
+              </p>
+              <p><strong>Location:</strong> {gymClass?.location || 'N/A'}</p>
+              <p>
+                <strong>Time:</strong>{' '}
+                {gymClass?.date && gymClass?.time
+                  ? new Date(`${gymClass.date}T${gymClass.time}`).toLocaleString()
+                  : 'TBD'}
+              </p>
+              <p><strong>Description:</strong> {gymClass?.description || 'No description available.'}</p>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
