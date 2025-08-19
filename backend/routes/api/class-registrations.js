@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { requireAuth } = require('../../utils/auth');
-const { ClassRegistration, GymClass, User } = require('../../db/models');
+const { ClassRegistration, GymClass, User, Gym } = require('../../db/models');
 
-
+// GET /api/class-registrations
 // Get all registrations for the current user
 router.get('/', requireAuth, async (req, res) => {
   try {
@@ -11,10 +11,13 @@ router.get('/', requireAuth, async (req, res) => {
     const registrations = await ClassRegistration.findAll({ 
       where: { userId },
       attributes: ['id', 'userId', 'gymClassId', 'createdAt', 'updatedAt'],
-      include: [{ model: GymClass,
-      attributes: ['id', 'name', 'date', 'time', 'capacity', 'location', 'description'],
-      include: [{ model: User, as: 'instructor', attributes: ['id', 'firstName', 'lastName'] }]
-       }],
+      include: [{
+        model: GymClass,
+        attributes: ['id', 'name', 'date', 'time', 'capacity', 'location', 'description'],
+        include: [{ model: User, as: 'instructor', attributes: ['id', 'firstName', 'lastName'] },
+        { model: Gym, as: 'gym', attributes: ['id', 'name'] }
+      ]
+      }],
     });
     return res.json({ Registrations: registrations });
   } catch (err) {
@@ -22,27 +25,16 @@ router.get('/', requireAuth, async (req, res) => {
     return res.status(500).json({ message: 'Server error fetching registrations' });
   }
 });
-// GET /api/class-registrations
-// Fetch all registrations (you can later scope to user or class if needed)
-// router.get('/', requireAuth, async (req, res) => {
-//   try {
-//     const registrations = await ClassRegistration.findAll();
-//     return res.json({ Registrations: registrations });
-//   } catch (err) {
-//     console.error(err);
-//     return res.status(500).json({ message: 'Server error fetching registrations' });
-//   }
-// });
 
 // POST /api/class-registrations
-// Create a new registration (user signs up for a gym class)
+// User registers for class
 router.post('/', requireAuth, async (req, res) => {
   const userId = req.user.id;
   const { gymClassId } = req.body;
 
   if (!gymClassId) {
-  return res.status(400).json({ message: 'gymClassId is required.' });
-}
+    return res.status(400).json({ message: 'gymClassId is required.' });
+  }
 
   try {
     // Check if user already registered for this class
@@ -61,6 +53,16 @@ router.post('/', requireAuth, async (req, res) => {
     const registrationCount = await ClassRegistration.count({ where: { gymClassId } });
     if (registrationCount >= gymClass.capacity) {
       return res.status(400).json({ message: 'Class is full.' });
+    }
+
+    // Check for time conflicts 
+    const userRegistrations = await ClassRegistration.findAll({ where: { userId } });
+
+    for (let reg of userRegistrations) {
+      const regClass = await GymClass.findByPk(reg.gymClassId);
+      if (regClass.date === gymClass.date && regClass.time === gymClass.time) {
+        return res.status(400).json({ message: 'You have another class at this time.' });
+      }
     }
 
     // Create registration

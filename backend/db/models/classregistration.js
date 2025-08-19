@@ -21,6 +21,11 @@ module.exports = (sequelize, DataTypes) => {
 
 
   ClassRegistration.init({
+      id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false

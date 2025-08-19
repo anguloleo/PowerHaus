@@ -29,40 +29,55 @@ export const fetchClassRegistrations = () => async (dispatch) => {
 
   if (res.ok) {
     const data = await res.json();
-
-    console.log("API registrations data:", data);
     const registrationArray = data.Registrations || [];
-
-   dispatch(loadRegistrations(registrationArray));
+    dispatch(loadRegistrations(registrationArray));
   }
 };
 
 // Create a new registration (user enrolling in a class)
 export const createClassRegistration = ({ gymClassId }) => async (dispatch) => {
-  const res = await csrfFetch('/api/class-registrations', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ gymClassId })
-  });
+  try {
+    const res = await csrfFetch('/api/class-registrations', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ gymClassId })
+    });
 
-  if (res.ok) {
     const data = await res.json();
     dispatch(addRegistration(data));
-    return data;
-  } else {
-    const error = await res.json();
-    throw error;
+    return { success: true, registration: data };
+  } catch (err) {
+    // If thrown Response, parse JSON error message
+    if (err instanceof Response) {
+      try {
+        const errorData = await err.json();
+        console.error("Backend validation error:", errorData.message);
+        return { success: false, message: errorData.message || 'Registration failed' };
+      } catch {
+        return { success: false, message: 'Unknown server error' };
+      }
+    }
+    return { success: false, message: err.message || 'Network or server error' };
   }
 };
 
 // Delete a registration (user unenrolls from a class)
 export const removeClassRegistration = (id) => async (dispatch) => {
-  const res = await csrfFetch(`/api/class-registrations/${id}`, {
-    method: 'DELETE'
-  });
+  try {
+    const res = await csrfFetch(`/api/class-registrations/${id}`, {
+      method: 'DELETE'
+    });
 
-  if (res.ok) {
-    dispatch(deleteRegistration(id));
+    if (res.ok) {
+      dispatch(deleteRegistration(id));
+      return { success: true };
+    } else {
+      const errorData = await res.json();
+      return { success: false, message: errorData.message || 'Failed to unregister' };
+    }
+  } catch (err) {
+    console.error('Error deleting registration:', err);
+    return { success: false, message: 'Network or server error' };
   }
 };
 
