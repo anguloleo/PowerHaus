@@ -5,12 +5,16 @@ import * as sessionActions from './store/session';
 import Navigation from './components/Navigation';
 import GymClassList from './components/GymClassList';
 import GymClassListAll from './components/GymClassListAll';
+import GymClassDetail from './components/GymClassDetail';
+import GymClassCreateForm from './components/GymClassCreateForm';
+import GymClassEditForm from './components/GymClassEditForm';
 import GymClassRegistered from './components/GymClassRegistered';
 import GymMap from './components/GymMap'; 
 import GymDetail from './components/GymDetail';
 import HomePage from './components/HomePage';
 import RepairRequestList from './components/RepairRequestList';
 import RepairRequestDetail from './components/RepairRequestDetail';
+
 
 
 
@@ -51,6 +55,18 @@ const router = createBrowserRouter([
       {
         path: '/my-classes',
         element: <GymClassRegistered />
+      },
+      {
+        path: '/classes/:classId',
+        element: <GymClassDetail />
+      },
+      {
+        path: '/classes/new',
+        element: <GymClassCreateForm />
+      },
+      {
+        path: '/classes/:classId/edit',
+        element: <GymClassEditForm />
       },
       {
         path: '/gyms', 

@@ -85,6 +85,12 @@ router.put('/:id', requireAuth, validateGymClass, async (req, res) => {
     if (!gymClass) {
       return res.status(404).json({ message: 'Class not found' });
     }
+
+        // Only allow admins
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Forbidden: Admins only' });
+    }
+    
     await gymClass.update(req.body);
     res.json(gymClass);
   } catch (err) {

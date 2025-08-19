@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchGymClassesByGymId } from "../../store/gymClasses.js";
 import "./GymClassList.css";
-import GymClassDetailModal from "../GymClassDetailModal";
+import GymClassDetailModal from "../GymClassDetail/index.js";
 
 export default function GymClassList() {
   const dispatch = useDispatch();
