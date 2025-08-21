@@ -3,14 +3,21 @@ import { useDispatch } from 'react-redux';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import * as sessionActions from './store/session';
 import Navigation from './components/Navigation';
+import About from './components/About';
 import GymClassList from './components/GymClassList';
 import GymClassListAll from './components/GymClassListAll';
+import GymClassDetail from './components/GymClassDetail';
+import GymClassCreateForm from './components/GymClassCreateForm';
+import GymClassEditForm from './components/GymClassEditForm';
 import GymClassRegistered from './components/GymClassRegistered';
 import GymMap from './components/GymMap'; 
 import GymDetail from './components/GymDetail';
 import HomePage from './components/HomePage';
 import RepairRequestList from './components/RepairRequestList';
 import RepairRequestDetail from './components/RepairRequestDetail';
+import UserMetricsDashboard from './components/UserMetricsDashboard';
+import UserMetricsForm from './components/UserMetricsForm';
+
 
 
 
@@ -41,6 +48,10 @@ const router = createBrowserRouter([
         element: <HomePage />
       },
       {
+        path: '/about',
+        element: <About />
+      },
+      {
         path: '/classes',
         element: <GymClassList />
       },
@@ -51,6 +62,18 @@ const router = createBrowserRouter([
       {
         path: '/my-classes',
         element: <GymClassRegistered />
+      },
+      {
+        path: '/classes/:classId',
+        element: <GymClassDetail />
+      },
+      {
+        path: '/classes/new',
+        element: <GymClassCreateForm />
+      },
+      {
+        path: '/classes/:classId/edit',
+        element: <GymClassEditForm />
       },
       {
         path: '/gyms', 
@@ -67,6 +90,18 @@ const router = createBrowserRouter([
       {
         path: '/repair-requests/:requestId',
         element: <RepairRequestDetail />
+      },
+      {
+        path: '/repair-requests/new',
+        element: <RepairRequestList />
+      },
+      {
+        path: '/user-metrics',
+        element: <UserMetricsDashboard />
+      },
+      {
+        path: '/user-metrics/new',
+        element: <UserMetricsForm />
       },
 
     ]

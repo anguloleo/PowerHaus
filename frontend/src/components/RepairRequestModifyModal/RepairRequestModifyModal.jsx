@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { editRepairRequest, fetchRepairRequests } from '../../store/repairRequests';
 import { fetchGyms } from '../../store/gyms';
@@ -14,28 +14,29 @@ const RepairRequestModifyModal = ({ request }) => {
   const gyms = Object.values(useSelector(state => state.gyms.all || {}));
   const equipmentByGym = useSelector(state => state.equipment.byGymId || {});
 
-  // Helpers to robustly pick the IDs from varying shapes:
-  const getRequestGymIdStr = () => {
-    // Try several possible locations for the gym id
+  // --- Memoized helpers ---
+  const getRequestGymIdStr = useCallback(() => {
     const id =
       request?.equipment?.gymId ??
       request?.equipment?.gym?.id ??
       request?.gymId ??
       null;
     return id != null ? String(id) : '';
-  };
-  const getRequestEquipmentIdStr = () => {
+  }, [request]);
+
+  const getRequestEquipmentIdStr = useCallback(() => {
     const id = request?.equipmentId ?? request?.equipment?.id ?? null;
     return id != null ? String(id) : '';
-  };
+  }, [request]);
 
+  // --- Local state ---
   const [selectedGymId, setSelectedGymId] = useState(getRequestGymIdStr());
   const [equipmentId, setEquipmentId] = useState(getRequestEquipmentIdStr());
   const [description, setDescription] = useState(request?.description || '');
   const [imageUrl, setImageUrl] = useState(request?.imageUrl || '');
   const [errors, setErrors] = useState([]);
 
-  // Safely get equipment list for selected gym (try string and numeric keys)
+  // --- Derived equipment list for selected gym ---
   const equipmentForSelectedGym = (() => {
     if (!selectedGymId) return [];
     return (
@@ -45,12 +46,12 @@ const RepairRequestModifyModal = ({ request }) => {
     );
   })();
 
-  // Load gyms on mount
+  // --- Load gyms on mount ---
   useEffect(() => {
     dispatch(fetchGyms());
   }, [dispatch]);
 
-  // When request changes: reset fields based on request and fetch its gym equipment
+  // --- Reset fields when request changes ---
   useEffect(() => {
     setDescription(request?.description || '');
     setImageUrl(request?.imageUrl || '');
@@ -61,16 +62,22 @@ const RepairRequestModifyModal = ({ request }) => {
 
     if (reqGymId) {
       setSelectedGymId(reqGymId);
-      // fetchEquipmentByGymId probably expects a number id; give Number(...) 
       dispatch(fetchEquipmentByGymId(Number(reqGymId)));
     } else {
       setSelectedGymId('');
     }
 
     setEquipmentId(reqEquipmentId || '');
-  }, [request?.id, dispatch]); // depend on request.id to catch opening another modal
+  }, [
+    request?.id,
+    request?.description,
+    request?.imageUrl,
+    getRequestGymIdStr,
+    getRequestEquipmentIdStr,
+    dispatch
+  ]);
 
-  // If gyms finish loading and nothing selected yet, default to request's gym or first gym
+  // --- Set selected gym after gyms load if not yet selected ---
   useEffect(() => {
     if (gyms.length > 0 && !selectedGymId) {
       const reqGymId = getRequestGymIdStr();
@@ -80,9 +87,9 @@ const RepairRequestModifyModal = ({ request }) => {
         setSelectedGymId(String(gyms[0].id));
       }
     }
-  }, [gyms, selectedGymId, request]);
+  }, [gyms, selectedGymId, getRequestGymIdStr]);
 
-  // When selectedGymId changes (user changed or we set from request), fetch equipment for it
+  // --- Fetch equipment when selectedGymId changes ---
   useEffect(() => {
     if (selectedGymId) {
       dispatch(fetchEquipmentByGymId(Number(selectedGymId)));
@@ -91,35 +98,28 @@ const RepairRequestModifyModal = ({ request }) => {
     }
   }, [dispatch, selectedGymId]);
 
-  
-  // After equipment list for a gym loads, ensure the equipmentId matches the request or pick first valid
+  // --- Ensure equipmentId is valid after equipment list loads ---
   useEffect(() => {
     const list = equipmentForSelectedGym;
     if (list.length > 0) {
-      // Try to keep the request's equipment if present, otherwise choose first
       const reqEquipmentId = getRequestEquipmentIdStr();
       const foundReq = reqEquipmentId && list.some(eq => String(eq.id) === reqEquipmentId);
 
       if (foundReq) {
         setEquipmentId(reqEquipmentId);
-      } else {
-        // If current equipmentId is not in loaded list, default to first
-        if (!list.some(eq => String(eq.id) === equipmentId)) {
-          setEquipmentId(String(list[0].id));
-        }
+      } else if (!list.some(eq => String(eq.id) === equipmentId)) {
+        setEquipmentId(String(list[0].id));
       }
     } else {
-      // No equipment for selected gym
       setEquipmentId('');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [equipmentByGym, selectedGymId, request?.id]); // include request.id so opening a new request re-runs this
+  }, [equipmentForSelectedGym, equipmentId, getRequestEquipmentIdStr]);
 
+  // --- Form submission ---
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors([]);
 
-    // Convert equipmentId to number for backend if needed
     const repairData = {
       equipmentId: equipmentId ? Number(equipmentId) : null,
       description,
@@ -190,7 +190,7 @@ const RepairRequestModifyModal = ({ request }) => {
           </select>
         </label>
 
-        {/* DESCRIPTION TEXTAREA */}
+        {/* DESCRIPTION */}
         <label>
           Description of the Problem:
           <textarea
@@ -201,7 +201,7 @@ const RepairRequestModifyModal = ({ request }) => {
           />
         </label>
 
-        {/* OPTIONAL IMAGE URL */}
+        {/* IMAGE URL */}
         <label>
           Optional Image URL:
           <input

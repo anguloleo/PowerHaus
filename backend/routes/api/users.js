@@ -52,6 +52,20 @@ router.post(
 );
 
 
+// GET /api/users?role=instructor
+router.get('/', async (req, res) => {
+  try {
+    const { role } = req.query;
+    const where = role ? { role } : {};
+    const users = await User.findAll({ where });
+    res.json({ users });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error fetching users" });
+  }
+});
+
+
 
 
 

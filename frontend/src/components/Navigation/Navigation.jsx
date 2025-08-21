@@ -2,6 +2,8 @@
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
+import OpenModalButton from "../OpenModalButton/OpenModalButton";
+import RepairRequestFormModal from "../RepairRequestFormModal";
 import "./Navigation.css";
 
 function Navigation({ isLoaded }) {
@@ -33,7 +35,26 @@ function Navigation({ isLoaded }) {
           <li>
             <NavLink to="/gyms">Gyms</NavLink>
           </li>
+          <li>
+            <NavLink to="/about">About</NavLink>
+          </li>
         </ul>
+
+        {/* Quick Action Links */}
+        {sessionUser && (
+          <ul className="nav-actions">
+            <li>
+              <NavLink to="/user-metrics/new">Add Progress</NavLink>
+            </li>
+            <li>
+              <OpenModalButton
+                buttonText="Add New Repair Request"
+                modalComponent={<RepairRequestFormModal />}
+                className="orange-button"
+              />
+            </li>
+          </ul>
+        )}
       </div>
 
       {/* Profile Button */}

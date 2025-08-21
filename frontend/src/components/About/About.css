@@ -1,0 +1,56 @@
+/* About.css */
+
+body, html {
+  margin: 0;
+  padding: 0;
+  background-color: #0A1A2F; /* Deep Navy Blue */
+  color: #FFFFFF;
+  font-family: 'Arial', sans-serif;
+  min-height: 100vh;
+}
+
+.about-section {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  text-align: center;
+  position: relative;
+}
+
+.about-logo {
+  width: 150px;
+  margin-bottom: 1.5rem;
+}
+
+/* Orange accent bar with barbell icon */
+.accent-bar {
+  height: 4px;
+  width: 60px;
+  background-color: #FF5A2A;
+  margin: 0 auto 1rem auto;
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.barbell-icon {
+  position: absolute;
+  top: -14px;
+  font-size: 24px;
+  color: #FF5A2A;
+}
+
+.about-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #FF5A2A;
+}
+
+.about-section p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  color: #FFFFFF;
+}

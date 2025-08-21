@@ -64,6 +64,49 @@ button {
   color: #FF5A2A;
 }
 
+/* --- Nav Actions (Add Progress / Repair Request) --- */
+/* --- Subtle Nav Actions --- */
+.nav-actions {
+  display: flex;
+  gap: 1rem;
+  margin-left: 2rem;
+  align-items: center;
+}
+
+.nav-actions li a {
+  color: #FF5A2A; /* Vibrant Orange */
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 0.9rem;
+  padding: 2px 4px; /* tiny padding for click area */
+  border-radius: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-actions li a:hover {
+  background-color: #FF5A2A; /* orange hover */
+  color: #0A1A2F; /* Deep Navy text on hover */
+}
+
+/* Style for OpenModalButton using same class */
+.orange-button {
+  background-color: #ff7f00; /* same orange */
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.orange-button:hover {
+  background-color: #e66b00; /* hover effect */
+}
+
+
+
+
 /* Right Side (Profile Button) */
 .profile-container {
   position: relative;

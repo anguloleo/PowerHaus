@@ -5,6 +5,7 @@ const gymsRouter = require('./gyms.js');
 const classesRouter = require('./classes.js');
 const repairRequestsRouter = require('./repairrequests.js')
 const classRegistrationsRouter = require('./class-registrations.js');
+const userMetricsRouter = require('./userMetrics.js');
 const { restoreUser } = require("../../utils/auth.js");
 
 
@@ -16,6 +17,7 @@ router.use('/gyms', gymsRouter);
 router.use('/classes', classesRouter);
 router.use('/repair-requests', repairRequestsRouter);
 router.use('/class-registrations', classRegistrationsRouter);
+router.use('/userMetrics', userMetricsRouter);
 
 
 module.exports = router;

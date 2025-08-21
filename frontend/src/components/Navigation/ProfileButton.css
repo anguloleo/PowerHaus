@@ -39,7 +39,7 @@
   transform: translateY(-10px);
   pointer-events: none;
   transition: all 0.25s ease-in-out;
-  z-index: 50;
+  z-index: 1000;
 }
 
 /* Dropdown arrow */

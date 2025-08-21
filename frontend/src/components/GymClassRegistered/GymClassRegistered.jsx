@@ -1,24 +1,36 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchClassRegistrations } from '../../store/classRegistration';
-import { fetchGymClasses } from '../../store/gymClasses';
+import { fetchClassRegistrations, removeClassRegistration } from '../../store/classRegistration';
 
 const GymClassRegistered = () => {
   const dispatch = useDispatch();
+  const [error, setError] = useState(null); // new error state
 
-  // Load registrations and gym classes on mount
   useEffect(() => {
     dispatch(fetchClassRegistrations());
-    dispatch(fetchGymClasses());
   }, [dispatch]);
 
-  // Select registrations and gym classes from Redux store
   const registrations = useSelector(state => Object.values(state.classRegistration.entries));
-  const gymClasses = useSelector(state => state.gymClasses.entries);
-  const isLoadingRegs = useSelector(state => state.classRegistration.isLoading);
-  const isLoadingClasses = useSelector(state => state.gymClasses.isLoading);
+  const isLoading = useSelector(state => state.classRegistration.isLoading);
 
-  if (isLoadingRegs || isLoadingClasses) {
+  const handleUnregister = async (registrationId, className) => {
+    const confirmed = window.confirm(`Are you sure you want to unregister from "${className}"?`);
+    if (!confirmed) return;
+
+    try {
+      const result = await dispatch(removeClassRegistration(registrationId));
+      if (!result.success) {
+        setError(result.message);
+      } else {
+        setError(null); 
+      }
+    } catch (error) {
+      console.error("Failed to unregister:", error);
+      setError('Something went wrong while unregistering.');
+    }
+  };
+
+  if (isLoading) {
     return <div>Loading your registered classes...</div>;
   }
 
@@ -26,25 +38,52 @@ const GymClassRegistered = () => {
     return <div>You have not registered for any classes yet.</div>;
   }
 
-const uniqueGymClassIds = [...new Set(registrations.map(reg => reg.gymClassId))];
-
-const registeredClasses = uniqueGymClassIds
-  .map(id => gymClasses[id])
-  .filter(gymClass => gymClass);
-
   return (
     <div>
       <h2>Your Registered Classes</h2>
+
+      {/* Show any error messages */}
+      {error && (
+        <div style={{ color: 'red', marginBottom: '1rem' }}>
+          {error}
+        </div>
+      )}
+
       <ul>
-        {registeredClasses.map(gymClass => (
-          <li key={gymClass.id} style={{ marginBottom: '1rem', border: '1px solid #ccc', padding: '0.5rem' }}>
-            <h3>{gymClass.name}</h3>
-            <p><strong>Instructor:</strong> {gymClass.instructorName || 'N/A'}</p>
-            <p><strong>Location:</strong> {gymClass.location || 'N/A'}</p>
-            <p><strong>Time:</strong> {gymClass.startTime ? new Date(gymClass.startTime).toLocaleString() : 'TBD'}</p>
-            <p><strong>Description:</strong> {gymClass.description || 'No description available.'}</p>
-          </li>
-        ))}
+        {registrations.map(reg => { 
+          const gymClass = reg.GymClass; 
+          return (
+            <li
+              key={reg.id}
+              style={{ marginBottom: '1rem', border: '1px solid #ccc', padding: '0.5rem' }}
+            >
+              <h3>{gymClass?.name}</h3>
+              <p>
+                <strong>Instructor:</strong>{' '}
+                {gymClass?.instructor
+                  ? `${gymClass.instructor.firstName} ${gymClass.instructor.lastName}`
+                  : 'N/A'}
+              </p>
+              <p><strong>Gym:</strong> {gymClass?.gym?.name || 'N/A'}</p>
+              <p><strong>Location:</strong> {gymClass?.location || 'N/A'}</p>
+              <p>
+                <strong>Time:</strong>{' '}
+                {gymClass?.date && gymClass?.time
+                  ? new Date(`${gymClass.date}T${gymClass.time}`).toLocaleString()
+                  : 'TBD'}
+              </p>
+              <p><strong>Description:</strong> {gymClass?.description || 'No description available.'}</p>
+              
+              {/* Unregister Button with Confirmation */}
+              <button
+                onClick={() => handleUnregister(reg.id, gymClass?.name)}
+                style={{ marginTop: '0.5rem', padding: '0.25rem 0.5rem', cursor: 'pointer' }}
+              >
+                Unregister
+              </button>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

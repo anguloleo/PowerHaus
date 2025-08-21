@@ -50,9 +50,7 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li className="profile-name">{user.username}</li>
-            <li className="profile-info">{user.firstName} {user.lastName}</li>
-            <li className="profile-info">{user.email}</li>
+            <li className="profile-name">Hi {user.firstName}!</li>
 
             {user.role === "member" && (
               <li>
@@ -62,11 +60,20 @@ function ProfileButton({ user }) {
               </li>
             )}
 
+            {user.role === "member" && (
+              <li>
+                <Link to="/user-metrics" onClick={closeMenu} className="profile-link">
+                  My Metrics
+                </Link>
+              </li>
+            )}
+
             <li>
               <Link to="/repair-requests" onClick={closeMenu} className="profile-link">
-                Repair Request
+                My Repair Requests
               </Link>
             </li>
+
             <li>
               <button onClick={logout} className="logout-btn">Log Out</button>
             </li>

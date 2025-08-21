@@ -1,0 +1,42 @@
+.umd-container {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.umd-title {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.umd-chart-wrapper {
+  margin-bottom: 60px; /* space between charts */
+}
+
+.umd-recent-metrics {
+  margin-top: 40px;
+}
+
+.umd-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.umd-table th,
+.umd-table td {
+  text-align: center;
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
+}
+
+.umd-photo {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.umd-message {
+  text-align: center;
+  margin-top: 50px;
+}

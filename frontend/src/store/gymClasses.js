@@ -4,6 +4,7 @@ import { csrfFetch } from './csrf';
 const LOAD_GYM_CLASSES = 'gymClass/loadGymClasses';
 const LOAD_GYM_CLASS = 'gymClass/loadGymClass';
 const ADD_GYM_CLASS = 'gymClass/addGymClass';
+const UPDATE_GYM_CLASS = "gymClasses/update";
 const DELETE_GYM_CLASS = 'gymClass/deleteGymClass';
 
 // Action Creators
@@ -20,6 +21,11 @@ export const loadGymClass = (gymClass) => ({
 export const addGymClass = (gymClass) => ({
   type: ADD_GYM_CLASS,
   gymClass
+});
+
+const updateGymClassAction = (gymClass) => ({
+  type: UPDATE_GYM_CLASS,
+  gymClass,
 });
 
 export const deleteGymClass = (gymClassId) => ({
@@ -79,6 +85,35 @@ export const createGymClass = (newClass) => async (dispatch) => {
   }
 };
 
+// Update Gym Class
+export const updateGymClass = (classId, data) => async (dispatch) => {
+  try {
+    const res = await csrfFetch(`/api/classes/${classId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (res.ok) {
+      const updatedClass = await res.json();
+      dispatch(updateGymClassAction(updatedClass));
+      return { success: true, gymClass: updatedClass };
+    } else {
+      const errorData = await res.json();
+      return {
+        success: false,
+        message: errorData.message || "Failed to update class",
+        errors: errorData.errors || null,
+      };
+    }
+  } catch (err) {
+    return {
+      success: false,
+      message: "Something went wrong. Please try again.",
+    };
+  }
+};
+
 //Delete gym class
 export const removeGymClass = (id) => async (dispatch) => {
   const res = await csrfFetch(`/api/classes/${id}`, {
@@ -127,6 +162,16 @@ const gymClassReducer = (state = initialState, action) => {
         }
       };
     }
+
+    case UPDATE_GYM_CLASS: {
+  return {
+    ...state,
+    entries: {
+      ...state.entries,
+      [action.gymClass.id]: action.gymClass,   
+    },
+  };
+}
 
     case DELETE_GYM_CLASS: {
       const newEntries = { ...state.entries };

@@ -1,22 +1,19 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { fetchGymClassesByGymId } from "../../store/gymClasses.js";
+import { useParams, useNavigate } from "react-router-dom";
+import { fetchGymClassesByGymId } from "../../store/gymClasses";
 import "./GymClassList.css";
-import GymClassDetailModal from "../GymClassDetailModal";
 
 export default function GymClassList() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { gymId } = useParams();
 
-  const classes = useSelector((state) =>
-    Object.values(state.gymClasses.entries || {})
-  );
-  const isLoading = useSelector((state) => state.gymClasses.isLoading);
+  const classes = useSelector(state => Object.values(state.gymClasses.entries));
+  const isLoading = useSelector(state => state.gymClasses.isLoading);
 
   const [currentWeekStart, setCurrentWeekStart] = useState(getStartOfWeek(new Date()));
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [selectedClassId, setSelectedClassId] = useState(null);
 
   useEffect(() => {
     dispatch(fetchGymClassesByGymId(gymId));
@@ -27,21 +24,16 @@ export default function GymClassList() {
   const weekDays = getWeekDays(currentWeekStart);
   const selectedDateString = formatDate(selectedDate);
 
-  // Filter by date
-  const classesForSelectedDate = classes.filter(
-    (gymClass) => gymClass.date === selectedDateString
-  );
+  // Filter classes for the selected date
+  const classesForSelectedDate = classes.filter(c => c.date === selectedDateString);
+
+  const handleClassClick = (classId) => {
+    navigate(`/classes/${classId}`);
+  };
 
   return (
     <div className="gym-class-list">
       <h2>Gym Classes</h2>
-
-      {selectedClassId && (
-        <GymClassDetailModal
-          classId={selectedClassId}
-          onClose={() => setSelectedClassId(null)}
-        />
-      )}
 
       <div className="week-nav">
         <button onClick={() => changeWeek(-1)}>← Previous Week</button>
@@ -50,7 +42,7 @@ export default function GymClassList() {
       </div>
 
       <div className="calendar-week">
-        {weekDays.map((day) => {
+        {weekDays.map(day => {
           const dateString = formatDate(day);
           const isSelected = dateString === selectedDateString;
           return (
@@ -71,17 +63,19 @@ export default function GymClassList() {
         <p>No classes scheduled for this day.</p>
       ) : (
         <ul className="class-list">
-          {classesForSelectedDate.map((c) => (
-            <li
-              key={c.id}
-              className="class-card"
-              style={{ cursor: "pointer" }}
-              onClick={() => setSelectedClassId(c.id)}
-            >
-              <strong>{c.name}</strong> <br />
-              {c.time} ({c.duration} min) <br />
-              Location: {c.location}
-            </li>
+          {classesForSelectedDate.map(c => (
+            c.id && (
+              <li
+                key={c.id}
+                className="class-card"
+                style={{ cursor: "pointer" }}
+                onClick={() => handleClassClick(c.id)}
+              >
+                <strong>{c.name}</strong> <br />
+                {c.time} ({c.duration} min) <br />
+                Location: {c.location || "TBA"}
+              </li>
+            )
           ))}
         </ul>
       )}
@@ -92,7 +86,7 @@ export default function GymClassList() {
   function getStartOfWeek(date) {
     const d = new Date(date);
     const day = d.getDay();
-    const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Monday start
+    const diff = d.getDate() - day + (day === 0 ? -6 : 1);
     return new Date(d.setDate(diff));
   }
 

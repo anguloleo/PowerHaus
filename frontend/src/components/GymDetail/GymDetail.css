@@ -1,22 +1,35 @@
 .gym-detail-container {
-  max-width: 600px;
+  max-width: 800px;
   margin: 20px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
+  padding: 30px;
+  border-radius: 12px;
+  background-color: #0A1A2F; /* Deep Navy Blue */
+  color: #E0E0E0; /* Soft light text */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
 .gym-detail-container h2 {
+  color: #FF7A50; /* Softer orange headers */
   margin-bottom: 15px;
+  text-align: center;
 }
 
 .gym-detail-container p {
   margin: 5px 0;
+  line-height: 1.5;
 }
 
 .map-container {
   height: 400px;
   width: 100%;
   margin-top: 20px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Optional: section for gym classes */
+.gym-classes-section {
+  margin-top: 30px;
 }

@@ -1,0 +1,116 @@
+/* ===== Container ===== */
+.repair-request-list-container {
+  padding: 30px;
+  background-color: #0A1A2F; /* Deep Navy Blue */
+  min-height: 100vh;
+  color: #E0E0E0; /* soft light gray text */
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* ===== Heading ===== */
+.repair-request-list-container h2 {
+  font-size: 1.8rem;
+  color: #FF7A50; /* softer warm orange */
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* ===== Add Button ===== */
+.repair-request-list-container .add-repair-btn {
+  padding: 10px 20px;
+  background-color: #FF7A50;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-bottom: 20px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.repair-request-list-container .add-repair-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 8px rgba(255, 122, 80, 0.5);
+}
+
+/* ===== Repair Requests List ===== */
+.repair-request-list-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+/* ===== Repair Request Card ===== */
+.repair-request-list-container li {
+  background-color: #112243; /* lighter navy */
+  border: 1px solid #556B8C; /* muted bluish-gray border */
+  border-radius: 12px;
+  padding: 15px 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+
+.repair-request-list-container li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(255, 122, 80, 0.3);
+}
+
+.repair-request-list-container li p {
+  margin: 6px 0;
+  color: #E0E0E0;
+}
+
+.repair-request-list-container li strong {
+  color: #FF7A50; /* softer orange for labels */
+}
+
+/* ===== Images ===== */
+.repair-request-list-container li img {
+  max-width: 100%;
+  max-height: 150px;
+  display: block;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+/* ===== Buttons in Cards ===== */
+.repair-request-list-container li button {
+  padding: 6px 12px;
+  margin-top: 8px;
+  margin-right: 10px;
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.repair-request-list-container li button:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 8px rgba(255, 122, 80, 0.4);
+}
+
+.repair-request-list-container li button.delete-btn {
+  background-color: #E06A50; /* slightly darker orange for delete */
+  color: #fff;
+}
+
+.repair-request-list-container li button.modify-btn {
+  background-color: #FF7A50;
+  color: #fff;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .repair-request-list-container {
+    padding: 20px;
+  }
+
+  .repair-request-list-container li {
+    padding: 12px 15px;
+  }
+}
