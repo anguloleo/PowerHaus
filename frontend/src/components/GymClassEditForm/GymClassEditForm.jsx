@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchGymClass, updateGymClass } from "../../store/gymClasses";
+import './GymClassEditForm.css';
+
 
 export default function GymClassEditForm() {
   const { classId } = useParams();

@@ -6,47 +6,31 @@ import { createClassRegistration } from "../../store/classRegistration.js";
 import "./GymClassDetail.css";
 
 export default function GymClassDetailPage() {
-  const { classId } = useParams(); // Get ID from route
+  const { classId } = useParams();
+  const classIdInt = parseInt(classId, 10);
   const dispatch = useDispatch();
-  const gymClass = useSelector((state) => state.gymClasses.entries[classId]);
+
+  const gymClass = useSelector((state) => state.gymClasses.entries[classIdInt]);
   const currentUser = useSelector((state) => state.session.user);
   const registrations = useSelector((state) => state.classRegistration.entries);
-  const registrationList = useMemo(
-    () => Object.values(registrations),
-    [registrations]
-  );
+  const registrationList = useMemo(() => Object.values(registrations), [registrations]);
 
   useEffect(() => {
-    if (!gymClass) dispatch(fetchGymClass(classId));
-  }, [dispatch, classId, gymClass]);
+    if (!gymClass && !isNaN(classIdInt)) dispatch(fetchGymClass(classIdInt));
+  }, [dispatch, classIdInt, gymClass]);
 
   if (!gymClass) return <p>Loading class details...</p>;
 
-  const spotsLeft =
-    gymClass.capacity -
-    registrationList.filter((reg) => reg.gymClassId === gymClass.id).length;
-
-  const userRegistration = registrationList.find(
-    (reg) => reg.userId === currentUser?.id && reg.gymClassId === gymClass.id
-  );
+  const spotsLeft = gymClass.capacity - registrationList.filter(reg => reg.gymClassId === gymClass.id).length;
+  const userRegistration = registrationList.find(reg => reg.userId === currentUser?.id && reg.gymClassId === gymClass.id);
 
   const handleSignUp = async () => {
-    if (!currentUser) {
-      alert("Please log in to sign up.");
-      return;
-    }
-    if (spotsLeft <= 0) {
-      alert("Sorry, this class is full.");
-      return;
-    }
-    if (userRegistration) {
-      alert("You are already signed up for this class.");
-      return;
-    }
+    if (!currentUser) return alert("Please log in to sign up.");
+    if (spotsLeft <= 0) return alert("Sorry, this class is full.");
+    if (userRegistration) return alert("You are already signed up for this class.");
+
     try {
-      await dispatch(
-        createClassRegistration({ userId: currentUser.id, gymClassId: classId })
-      );
+      await dispatch(createClassRegistration({ gymClassId: classIdInt }));
       alert("You've signed up!");
     } catch (err) {
       alert("Failed to sign up. Please try again.");
@@ -70,11 +54,7 @@ export default function GymClassDetailPage() {
         onClick={handleSignUp}
         disabled={spotsLeft <= 0 || !!userRegistration}
       >
-        {spotsLeft <= 0
-          ? "Class Full"
-          : userRegistration
-          ? "Already Signed Up"
-          : "Sign Up"}
+        {spotsLeft <= 0 ? "Class Full" : userRegistration ? "Already Signed Up" : "Sign Up"}
       </button>
     </div>
   );

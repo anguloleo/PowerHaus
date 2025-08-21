@@ -60,9 +60,17 @@ function ProfileButton({ user }) {
               </li>
             )}
 
+            {user.role === "member" && (
+              <li>
+                <Link to="/user-metrics" onClick={closeMenu} className="profile-link">
+                  My Metrics
+                </Link>
+              </li>
+            )}
+
             <li>
               <Link to="/repair-requests" onClick={closeMenu} className="profile-link">
-                Repair Request
+                My Repair Requests
               </Link>
             </li>
 

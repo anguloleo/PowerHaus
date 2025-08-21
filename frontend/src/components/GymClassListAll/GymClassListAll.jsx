@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGyms } from "../../store/gyms";
 import { fetchGymClassesByGymId } from "../../store/gymClasses";
@@ -32,16 +32,16 @@ export default function GymClassListAll() {
   }, [dispatch, selectedGymId]);
 
   // Fetch user registrations
-  const fetchRegistrations = async () => {
+  const fetchRegistrations = useCallback(async () => {
     if (sessionUser) {
       const res = await dispatch(fetchClassRegistrations());
       setLocalRegistrations(Object.values(res?.entries || {}));
     }
-  };
+  }, [dispatch, sessionUser]);
 
   useEffect(() => {
     fetchRegistrations();
-  }, [dispatch, sessionUser]);
+  }, [fetchRegistrations]);
 
   const isRegistered = (gymClassId) =>
     localRegistrations.some(reg => reg.gymClassId === gymClassId && reg.userId === sessionUser?.id);
@@ -74,15 +74,8 @@ export default function GymClassListAll() {
       setError(result.message || "Failed to register.");
     } else {
       setError(null);
-
-      // Store the full registration object returned by the thunk
       setLocalRegistrations(prev => [...prev, result.registration]);
-
-      // Success message
-      setSuccessMessages(prev => ({
-        ...prev,
-        [gymClass.id]: `Successfully registered for ${gymClass.name}!`
-      }));
+      setSuccessMessages(prev => ({ ...prev, [gymClass.id]: `Successfully registered for ${gymClass.name}!` }));
 
       setTimeout(() => {
         setSuccessMessages(prev => {
@@ -176,9 +169,9 @@ export default function GymClassListAll() {
                 <p><strong>Capacity:</strong> {gymClass.capacity || "N/A"}</p>
                 <p><strong>Spots Available:</strong> {spotsAvailable}</p>
 
-                  {sessionUser?.role === "admin" && (
-                    <button onClick={() => handleEdit(gymClass)}>Edit</button>
-                  )}
+                {sessionUser?.role === "admin" && (
+                  <button onClick={() => handleEdit(gymClass)}>Edit</button>
+                )}
 
                 {registered ? (
                   <button onClick={() => handleUnregister(gymClass.id)}>Unregister</button>

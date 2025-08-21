@@ -1,0 +1,30 @@
+.bfp-chart-container {
+  width: 100%;
+  height: 500px; /* increased height for more space */
+  margin-top: 40px; /* prevents overlap with previous chart */
+}
+
+.bfp-chart-title {
+  margin-bottom: 20px;
+}
+
+.bfp-tooltip {
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  max-width: 200px;
+}
+
+.bfp-tooltip-photo {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-top: 5px;
+}
+
+.bfp-photo-dot {
+  border-radius: 50%;
+}

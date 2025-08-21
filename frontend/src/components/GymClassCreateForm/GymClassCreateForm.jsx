@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createGymClass } from "../../store/gymClasses";
 import { fetchGyms } from "../../store/gyms";
+import "./GymClassCreateForm.css";
 
 export default function GymClassCreateForm() {
   const dispatch = useDispatch();

@@ -4,6 +4,7 @@ const { Model, Validator } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
+    
     static associate(models) {
       
       // Student for Gym class
@@ -29,6 +30,12 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'userId',
         onDelete: 'CASCADE',
         hooks: true
+      });
+
+      User.hasMany(models.UserMetrics, {
+        foreignKey: 'userId',
+        as: 'metrics', 
+        onDelete: 'CASCADE',
       });
     }
   }

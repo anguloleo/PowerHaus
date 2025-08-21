@@ -6,6 +6,7 @@ import gymClassReducer from './gymClasses.js';
 import gymReducer from './gyms';
 import repairRequestsReducer from './repairRequests.js';
 import equipmentReducer from './equipment.js';
+import userMetricsReducer from './userMetrics.js';
 
 const rootReducer = combineReducers({
     session: sessionReducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     gyms: gymReducer,
     repairRequests: repairRequestsReducer,
     equipment: equipmentReducer,
+    userMetrics: userMetricsReducer
 });
 
 
