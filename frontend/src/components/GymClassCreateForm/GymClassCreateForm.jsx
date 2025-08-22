@@ -60,7 +60,7 @@ export default function GymClassCreateForm() {
     try {
       const newClass = await dispatch(createGymClass(payload));
       if (newClass && newClass.id) {
-        navigate(`/classes/${newClass.id}`);
+        navigate(`/classes/all`);
       }
     } catch (err) {
       setError(err.message || "Failed to create class.");

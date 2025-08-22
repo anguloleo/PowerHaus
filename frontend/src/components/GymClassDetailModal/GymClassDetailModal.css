@@ -1,4 +1,5 @@
-.modal-container.repair-modal {
+.modal-container.gym-class-modal {
+  position: relative;
   padding: 25px 30px;
   width: 450px;
   max-width: 95%;
@@ -10,20 +11,25 @@
   color: #333;
 }
 
-.modal-header {
+.modal-container.gym-class-modal .modal-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   margin-bottom: 20px;
+  position: relative;
+  width: 100%;
 }
 
-.modal-header h2 {
+.modal-container.gym-class-modal .modal-header h2 {
   margin: 0;
   font-size: 1.6rem;
   color: #FF5A2A;
 }
 
-.close-button {
+.modal-container.gym-class-modal .close-button {
+  position: absolute; 
+  top: 0;
+  right: 0;
   border: none;
   background: none;
   font-size: 1.5rem;
@@ -32,48 +38,36 @@
   transition: color 0.2s;
 }
 
-.close-button:hover {
+.modal-container.gym-class-modal .close-button:hover {
   color: #FF5A2A;
 }
 
-/* Form Styling */
-.repair-request-form {
+.modal-container.gym-class-modal .gym-class-info {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
-.form-group {
+.modal-container.gym-class-modal .info-row {
   display: flex;
-  flex-direction: column;
-}
-
-label {
-  margin-bottom: 6px;
-  font-weight: 600;
-}
-
-input, select, textarea {
+  justify-content: space-between;
+  background: #f5f5f5;
   padding: 8px 12px;
   border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  outline: none;
-  transition: border 0.2s, box-shadow 0.2s;
 }
 
-input::placeholder, textarea::placeholder {
-  color: #aaa;
+.modal-container.gym-class-modal .description {
+  margin-bottom: 20px;
+  padding: 10px 12px;
+  background-color: #fafafa;
+  border-radius: 8px;
+  line-height: 1.5;
 }
 
-input:focus, select:focus, textarea:focus {
-  border-color: #FF5A2A;
-  box-shadow: 0 0 8px #FF5A2A33;
-}
-
-/* Submit Button */
-.repair-request-form button {
-  padding: 10px;
+/* Scoped button styles only inside the modal */
+.modal-container.gym-class-modal button {
+  padding: 10px 20px;
   border-radius: 10px;
   border: none;
   background-color: #FF5A2A;
@@ -82,31 +76,18 @@ input:focus, select:focus, textarea:focus {
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.2s, transform 0.1s;
+  display: block;
+  margin: 0 auto;
 }
 
-.repair-request-form button:disabled {
+.modal-container.gym-class-modal button:disabled {
   background-color: #FF5A2A88;
   cursor: not-allowed;
 }
 
-.repair-request-form button:hover:not(:disabled) {
+.modal-container.gym-class-modal button:hover:not(:disabled) {
   background-color: #ff704b;
   transform: translateY(-1px);
-}
-
-/* Errors */
-.form-errors {
-  background-color: #ffe8e0;
-  border: 1px solid #FF5A2A;
-  padding: 0.8rem 1rem;
-  border-radius: 8px;
-  list-style-type: none;
-  margin-bottom: 1rem;
-  color: #FF5A2A;
-}
-
-.form-errors li {
-  margin-bottom: 0.3rem;
 }
 
 @keyframes slideDown {

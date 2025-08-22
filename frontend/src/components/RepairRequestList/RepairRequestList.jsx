@@ -4,7 +4,7 @@ import { fetchRepairRequests, removeRepairRequest } from '../../store/repairRequ
 import RepairRequestFormModal from '../RepairRequestFormModal';
 import RepairRequestModifyModal from '../RepairRequestModifyModal';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
-import ConfirmDeleteModal from '../ConfirmDeleteModal';
+import ConfirmActionModal from '../ConfirmActionModal';
 import './RepairRequestList.css';
 
 export default function RepairRequestList() {
@@ -78,8 +78,11 @@ export default function RepairRequestList() {
                   <OpenModalButton
                     buttonText="Delete"
                     modalComponent={
-                      <ConfirmDeleteModal
+                      <ConfirmActionModal
+                        actionName="Delete Repair Request"
                         message="Are you sure you want to delete this repair request?"
+                        confirmText="Yes, delete"
+                        actionColor="#ff7f50"
                         onConfirm={() => dispatch(removeRepairRequest(request.id))}
                       />
                     }

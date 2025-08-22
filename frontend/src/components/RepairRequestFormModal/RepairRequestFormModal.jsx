@@ -46,7 +46,8 @@ const RepairRequestFormModal = () => {
     try {
       await dispatch(createRepairRequest(repairData));
       await dispatch(fetchRepairRequests());
-      closeModal();  
+      closeModal();                       // close the modal first
+      window.location.href = "/repair-requests"; // then navigate
     } catch (res) {
       const data = await res.json();
       if (data?.errors) setErrors(data.errors);

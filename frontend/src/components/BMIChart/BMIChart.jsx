@@ -57,23 +57,40 @@ export default function BMIChart({ metrics }) {
     <div className="bmi-chart-container">
       <h2 className="bmi-chart-title">Body Mass Index Tracker</h2>
       <ResponsiveContainer>
-        <LineChart data={metrics} margin={{ top: 20, right: 20, left: 20, bottom: 60 }}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" tick={{ angle: -45, textAnchor: 'end', fontSize: 12 }} />
-          <YAxis
-            domain={['dataMin - 2', 'dataMax + 2']}
-            label={{ value: 'BMI', angle: -90, position: 'insideLeft' }}
-            tickFormatter={(value) => value.toFixed(1)}
-          />
-          <Tooltip content={<CustomTooltip />} />
-          <Line
-            type="monotone"
-            dataKey="bmi"
-            stroke="#FF5A2A"
-            strokeWidth={2}
-            dot={<PhotoDot />}
-          />
-        </LineChart>
+ <LineChart
+  data={metrics}
+  margin={{ top: 20, right: 20, left: 20, bottom: 60 }}
+>
+  <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+  <XAxis
+    dataKey="date"
+    tick={{ angle: -45, textAnchor: 'end', fontSize: 12, fill: '#555' }}
+    axisLine={{ stroke: '#ccc' }}
+    tickLine={{ stroke: '#ccc' }}
+  />
+  <YAxis
+    domain={['dataMin - 2', 'dataMax + 2']}
+    label={{
+      value: 'BMI',
+      angle: -90,
+      position: 'insideLeft',
+      fill: '#555',
+    }}
+    tickFormatter={(value) => value.toFixed(1)}
+    axisLine={{ stroke: '#ccc' }}
+    tickLine={{ stroke: '#ccc' }}
+  />
+  <Tooltip content={<CustomTooltip />} />
+  <Line
+    type="monotone"
+    dataKey="bmi"
+    stroke="#FF5A2A"
+    strokeWidth={3}
+    dot={<PhotoDot />}
+    activeDot={{ r: 6 }}
+  />
+</LineChart>
+
       </ResponsiveContainer>
     </div>
   );

@@ -15,20 +15,16 @@ function LoginFormModal() {
     e.preventDefault();
     setErrors({});
     return dispatch(sessionActions.login({ credential, password }))
-    .then(closeModal)
-    .catch(
-      async (res) => {
+      .then(closeModal)
+      .catch(async (res) => {
         const data = await res.json();
         if (data?.errors) setErrors(data.errors);
       });
   };
 
-   // Demo Login 
   const demoLogin = (userCredential, userPassword) => {
     setCredential(userCredential);
     setPassword(userPassword);
-    // Dispatch login after state update:
-    // Because setState is async, wait a tick before dispatching login
     setTimeout(() => {
       dispatch(sessionActions.login({ credential: userCredential, password: userPassword }))
         .then(closeModal)
@@ -40,7 +36,8 @@ function LoginFormModal() {
   };
 
   return (
-    <>
+    <div className="modal-content login-modal">
+      <button className="close-btn" onClick={closeModal}>&times;</button>
       <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
         <label>
@@ -49,6 +46,7 @@ function LoginFormModal() {
             type="text"
             value={credential}
             onChange={(e) => setCredential(e.target.value)}
+            placeholder="Enter username or email"
             required
           />
         </label>
@@ -58,14 +56,15 @@ function LoginFormModal() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter password"
             required
           />
         </label>
-        {errors.credential && <p>{errors.credential}</p>}
-        <button type="submit">Log In</button>
+        {errors.credential && <p className="error">{errors.credential}</p>}
+        <button type="submit" className="login-btn">Log In</button>
       </form>
 
-      <div className="demo-buttons" style={{ marginTop: '1rem' }}>
+      <div className="demo-buttons">
         <button
           type="button"
           onClick={() => demoLogin('Demolition', 'password')}
@@ -77,12 +76,11 @@ function LoginFormModal() {
           type="button"
           onClick={() => demoLogin('SlowMoQueen', 'napmaster1')}
           className="demo-login-button"
-          style={{ marginLeft: '1rem' }}
         >
           Sign In as Member
         </button>
       </div>
-    </>
+    </div>
   );
 }
 

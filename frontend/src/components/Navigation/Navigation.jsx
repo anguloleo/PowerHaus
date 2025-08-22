@@ -31,10 +31,10 @@ function Navigation({ isLoaded }) {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/classes/all">Classes</NavLink>
+            <NavLink to="/gyms">Gyms</NavLink>
           </li>
           <li>
-            <NavLink to="/gyms">Gyms</NavLink>
+            <NavLink to="/classes/all">Classes</NavLink>
           </li>
           <li>
             <NavLink to="/about">About</NavLink>
@@ -42,7 +42,7 @@ function Navigation({ isLoaded }) {
         </ul>
 
         {/* Quick Action Links */}
-        {sessionUser && (
+        {sessionUser && sessionUser.role === "member" && (
           <ul className="nav-actions">
               <li>
               <OpenModalButton

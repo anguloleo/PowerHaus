@@ -1,7 +1,15 @@
-.gym-class-list {
-  max-width: 800px;
+.gym-class-list-container {
+  max-width: 850px;
   margin: 0 auto;
-  padding: 16px;
+  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+}
+
+h2, h3 {
+  text-align: center;
+  color: #FF5A2A;
+  margin-bottom: 16px;
 }
 
 .week-nav {
@@ -11,25 +19,53 @@
   margin-bottom: 16px;
 }
 
+.week-nav button {
+  background-color: #FF5A2A;
+  border: none;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.week-nav button:hover {
+  background-color: #ff704b;
+  transform: translateY(-1px);
+}
+
+.week-range {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
 .calendar-week {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .calendar-day {
   flex: 1;
   text-align: center;
-  padding: 10px;
+  padding: 12px 8px;
   cursor: pointer;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.calendar-day:hover {
+  background-color: #ffeae2;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .calendar-day.selected {
-  background-color: #007bff;
+  background-color: #FF5A2A;
   color: white;
   font-weight: bold;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
 .class-list {
@@ -37,10 +73,49 @@
   padding: 0;
 }
 
+/* ---------- Updated Class Card Styles ---------- */
 .class-card {
-  background: #f8f8f8;
-  border: 1px solid #ddd;
-  padding: 12px;
-  margin-bottom: 8px;
-  border-radius: 8px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  overflow: hidden;       /* ensures full-card button stays inside rounded corners */
+  padding: 0;             /* remove padding so button fills entire card */
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.full-card-button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 16px;
+  background-color: #fff;
+  color: #0A1A2F;
+  border: none;           /* remove border, card shadow already applied */
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.full-card-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.15);
+}
+
+.class-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.class-time, .class-location {
+  margin-top: 4px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.no-classes, .loading {
+  text-align: center;
+  font-style: italic;
+  color: #777;
+  margin-top: 16px;
 }

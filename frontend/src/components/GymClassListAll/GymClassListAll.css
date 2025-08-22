@@ -1,31 +1,30 @@
-/* ===== Container ===== */
+/* Container */
 .gym-class-list-container {
   padding: 30px;
-  background-color: #0A1A2F; /* Deep Navy Blue */
+  background-color: #0A1A2F;
   min-height: 100vh;
-  color: #E0E0E0; /* soft light gray text */
+  color: #E0E0E0;
   font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
-/* ===== Heading ===== */
-.gym-class-list-container h2 {
+h2 {
   font-size: 2rem;
-  color: #FF7A50; /* softer warm orange */
-  margin-bottom: 20px;
+  color: #FF7A50;
   text-align: center;
+  margin-bottom: 20px;
 }
 
-/* ===== Admin Create Button ===== */
+/* Admin Button */
 .create-class-btn {
   padding: 10px 20px;
-  background-color: #FF7A50; /* softer orange */
+  background-color: #FF7A50;
   color: #fff;
   border: none;
   border-radius: 10px;
   cursor: pointer;
   font-weight: bold;
-  transition: transform 0.2s, box-shadow 0.2s;
   margin-bottom: 1rem;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .create-class-btn:hover {
@@ -33,91 +32,78 @@
   box-shadow: 0 0 10px rgba(255, 122, 80, 0.5);
 }
 
-/* ===== Gym Select Dropdown ===== */
-.gym-select-container {
+/* Error */
+.error-message {
+  color: #FF5A2A;
+  margin-bottom: 1rem;
+}
+
+/* Gym & Date Select */
+.gym-select-container, .date-filter-container {
+    display: flex;
+  flex-direction: column; /* label on top of select */
+  align-items: center;    /* center horizontally */
   margin-bottom: 20px;
 }
 
-.gym-select-container label {
-  display: block;
-  margin-bottom: 5px;
+.gym-select-container label, .date-filter-container label {
   font-weight: bold;
-  color: #D6A67A; /* muted light orange */
-}
-
-.gym-select-container select {
-  width: 100%;
-  padding: 10px 15px;
-  border-radius: 8px;
-  border: 1px solid #556B8C; /* muted bluish-gray */
-  background-color: #112243; /* lighter navy */
-  color: #E0E0E0; /* soft gray text */
-  font-weight: bold;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.gym-select-container select:hover {
-  transform: scale(1.02);
-  box-shadow: 0 0 8px rgba(255, 122, 80, 0.4);
-}
-
-/* ===== Date Filter Input ===== */
-.date-filter-container {
-  margin-bottom: 20px;
-}
-
-.date-filter-container label {
-  display: block;
-  margin-bottom: 5px;
   color: #D6A67A;
-  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
 }
 
-.date-filter-container input[type="date"] {
-  padding: 10px;
+.gym-select-container select, .date-filter-container input[type="date"] {
+  width: 200px; /* shorter width */
+  max-width: 100%; /* still responsive on small screens */
+  padding: 8px 12px; /* slightly smaller padding */
   border-radius: 8px;
   border: 1px solid #556B8C;
   background-color: #112243;
   color: #E0E0E0;
   font-weight: bold;
-  cursor: pointer;
+  font-size: 0.95rem;
 }
 
-/* ===== Gym Class Cards ===== */
+/* Class Cards */
 .gym-class-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* space between cards */
 }
 
 .gym-class-card {
-  border: 2px solid #556B8C; /* muted border */
+  border: 2px solid #556B8C;
   border-radius: 12px;
   padding: 20px;
-  background-color: #112243; /* lighter navy */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  background-color: #112243;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
   transition: transform 0.2s, box-shadow 0.3s;
+
+  /* Long rectangle style */
+  width: 70%;
+  max-width: 900px;
+  margin: 0 auto; /* center on large screens */
 }
 
 .gym-class-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(255, 122, 80, 0.3); /* soft orange glow */
+  box-shadow: 0 6px 16px rgba(255,122,80,0.3);
 }
 
 .gym-class-card h3 {
+  color: #FF7A50;
   margin: 0 0 10px 0;
-  color: #FF7A50; /* softer orange */
   font-size: 1.5rem;
 }
 
 .gym-class-card p {
-  margin: 5px 0;
+  margin: 4px 0;
   color: #E0E0E0;
   font-size: 1rem;
 }
 
-/* ===== Buttons in Cards ===== */
+/* Buttons */
 .gym-class-card button {
   padding: 8px 15px;
   margin-top: 10px;
@@ -129,55 +115,31 @@
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.gym-class-card button:disabled {
-  background-color: #555;
-  cursor: not-allowed;
-}
+.gym-class-card button:disabled { background-color: #555; cursor: not-allowed; }
+.gym-class-card button:hover:not(:disabled) { transform: scale(1.03); box-shadow: 0 0 8px rgba(255,122,80,0.4); }
 
-.gym-class-card button:hover:not(:disabled) {
-  transform: scale(1.03);
-  box-shadow: 0 0 8px rgba(255, 122, 80, 0.4);
-}
+.gym-class-card button.register { background-color: #FF7A50; color: #fff; }
+.gym-class-card button.unregister { background-color: #E0E0E0; color: #112243; border: 2px solid #FF7A50; }
+.gym-class-card button.edit { background-color: #FF7A50; color: #fff; }
 
-.gym-class-card button.register {
-  background-color: #FF7A50;
-  color: #fff;
-}
-
-.gym-class-card button.unregister {
-  background-color: #E0E0E0;
-  color: #112243;
-  border: 2px solid #FF7A50;
-}
-
-.gym-class-card button.edit {
-  background-color: #FF7A50;
-  color: #fff;
-}
-
-/* ===== Success Popup ===== */
+/* Success popup */
 .success-popup-inline {
   margin-top: 10px;
   background-color: #4BB543;
   color: white;
-  padding: 8px 16px;
+  padding: 6px 12px;
   border-radius: 8px;
   font-size: 0.95rem;
   font-weight: bold;
-  transition: opacity 0.3s, transform 0.2s;
 }
 
-/* ===== Responsive ===== */
+/* No classes message */
+.no-classes {
+  font-style: italic;
+  color: #ccc;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
-  .gym-class-list-container {
-    padding: 20px;
-  }
-
-  .gym-class-card {
-    padding: 15px;
-  }
-
-  .gym-class-card h3 {
-    font-size: 1.3rem;
-  }
+  .gym-class-list { grid-template-columns: 1fr; }
 }
