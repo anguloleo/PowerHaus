@@ -17,7 +17,8 @@ export default function HomePage() {
             Your transformation starts here.
           </p>
           <div className="cta-buttons">
-            <button className="btn-primary">Join Now</button>
+            <button className="btn-primary"
+            onClick= {() => alert("Coming Soon!")}>Join Now</button>
             <Link to="/classes/all">
             <button className="btn-secondary">View Classes</button>
             </Link>

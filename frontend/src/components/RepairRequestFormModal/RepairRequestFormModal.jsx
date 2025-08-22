@@ -6,10 +6,7 @@ import { fetchEquipmentByGymId, clearEquipmentByGym } from '../../store/equipmen
 import { useModal } from '../../context/Modal';
 import './RepairRequestFormModal.css';
 
-
-
 const RepairRequestFormModal = () => {
-
   const dispatch = useDispatch();
   const { closeModal } = useModal();
 
@@ -23,10 +20,7 @@ const RepairRequestFormModal = () => {
   const [imageUrl, setImageUrl] = useState('');
   const [errors, setErrors] = useState([]);
 
-
-  useEffect(() => {
-    dispatch(fetchGyms());
-  }, [dispatch]);
+  useEffect(() => { dispatch(fetchGyms()); }, [dispatch]);
 
   useEffect(() => {
     if (selectedGymId) {
@@ -60,36 +54,33 @@ const RepairRequestFormModal = () => {
   };
 
   return (
-    <>
-      <h2>Report Broken Equipment</h2>
+    <div className="modal-container repair-modal">
+      <div className="modal-header">
+        <h2>Report Broken Equipment</h2>
+        <button className="close-button" onClick={closeModal}>&times;</button>
+      </div>
 
       {errors.length > 0 && (
         <ul className="form-errors">
-          {errors.map((err, i) => (
-            <li key={i}>{err}</li>
-          ))}
+          {errors.map((err, i) => <li key={i}>{err}</li>)}
         </ul>
       )}
 
       <form className="repair-request-form" onSubmit={handleSubmit}>
-        {/* GYM DROPDOWN */}
-        <label>
-          Select Gym:
+        <div className="form-group">
+          <label>Select Gym:</label>
           <select
             value={selectedGymId}
             onChange={(e) => setSelectedGymId(e.target.value)}
             required
           >
             <option value="" disabled>Select a gym</option>
-            {gyms && gyms.map(gym => (
-              <option key={gym.id} value={gym.id}>{gym.name}</option>
-            ))}
+            {gyms.map(gym => <option key={gym.id} value={gym.id}>{gym.name}</option>)}
           </select>
-        </label>
+        </div>
 
-        {/* EQUIPMENT DROPDOWN */}
-        <label>
-          Select Equipment:
+        <div className="form-group">
+          <label>Select Equipment:</label>
           <select
             value={equipmentId}
             onChange={(e) => setEquipmentId(e.target.value)}
@@ -99,39 +90,33 @@ const RepairRequestFormModal = () => {
             <option value="" disabled>
               {selectedGymId ? "Select equipment" : "Select a gym first"}
             </option>
-            {equipment && equipment.map(eq => (
-              <option key={eq.id} value={eq.id}>
-                {eq.name} (ID: {eq.id})
-              </option>
-            ))}
+            {equipment.map(eq => <option key={eq.id} value={eq.id}>{eq.name}</option>)}
           </select>
-        </label>
+        </div>
 
-        {/* DESCRIPTION TEXTAREA */}
-        <label>
-          Description of the Problem:
+        <div className="form-group">
+          <label>Description of the Problem:</label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             rows="4"
             required
           />
-        </label>
+        </div>
 
-        {/* OPTIONAL IMAGE URL */}
-        <label>
-          Optional Image URL:
+        <div className="form-group">
+          <label>Optional Image URL:</label>
           <input
-            type="text"
+            type="url"
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
             placeholder="https://example.com/image.jpg"
           />
-        </label>
+        </div>
 
         <button type="submit" disabled={!equipmentId}>Submit Repair Request</button>
       </form>
-    </>
+    </div>
   );
 };
 
