@@ -1,12 +1,16 @@
 import { useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchUserMetrics } from '../../store/userMetrics';
+import { fetchUserMetrics, deleteUserMetric } from '../../store/userMetrics';
+import { useModal } from '../../context/Modal';
 import BMIChart from '../BMIChart';
 import BFPChart from '../BFPChart';
+import ConfirmActionModal from '../ConfirmActionModal';
+import UserMetricsFormModal from '../UserMetricsFormModal';
 import './UserMetricsDashboard.css';
 
 export default function UserMetricsDashboard() {
   const dispatch = useDispatch();
+  const { openModal } = useModal();
   const sessionUser = useSelector(state => state.session.user); 
   const metrics = useSelector(state => state.userMetrics.entries);
 
@@ -19,6 +23,25 @@ export default function UserMetricsDashboard() {
   const sortedMetrics = useMemo(() => {
     return [...metrics].sort((a, b) => new Date(a.date) - new Date(b.date));
   }, [metrics]);
+
+  const handleDelete = (metric) => {
+    openModal({
+      content: (
+        <ConfirmActionModal
+          actionName="Delete Metric"
+          message={`Are you sure you want to delete the metric from ${metric.date}?`}
+          confirmText="Delete"
+          cancelText="Cancel"
+          actionColor="#d9534f"
+          onConfirm={() => dispatch(deleteUserMetric(metric.id))}
+        />
+      )
+    });
+  };
+
+  const handleEdit = (metric) => {
+    openModal({ content: <UserMetricsFormModal metric={metric} /> });
+  };
 
   if (!sessionUser) {
     return <p className="umd-message">Please log in to view your metrics.</p>;
@@ -49,6 +72,7 @@ export default function UserMetricsDashboard() {
                 <th>BMI</th>
                 <th>Body Fat %</th>
                 <th>Photo</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -66,6 +90,20 @@ export default function UserMetricsDashboard() {
                         className="umd-photo"
                       />
                     )}
+                  </td>
+                  <td>
+                    <button
+                      className="umd-btn umd-edit-btn"
+                      onClick={() => handleEdit(metric)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="umd-btn umd-delete-btn"
+                      onClick={() => handleDelete(metric)}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}

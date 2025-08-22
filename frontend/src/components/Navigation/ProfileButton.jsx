@@ -1,15 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate, Link } from "react-router-dom";   // ✅ add useNavigate
 import { HiOutlineUserCircle } from "react-icons/hi2";
 import * as sessionActions from "../../store/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
-import { Link } from "react-router-dom";
 import "./ProfileButton.css";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();   // ✅ initialize navigate
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
@@ -33,18 +34,21 @@ function ProfileButton({ user }) {
 
   const closeMenu = () => setShowMenu(false);
 
-  const logout = (e) => {
+  const logout = async (e) => {
     e.preventDefault();
-    dispatch(sessionActions.logout());
+    await dispatch(sessionActions.logout());  // ✅ wait for logout to finish
     closeMenu();
+    navigate("/");   // ✅ go to home after logout
   };
 
   const ulClassName = `profile-button-dropdown ${showMenu ? "active" : ""}`;
 
   return (
     <div className="profile-button-container">
-      <button onClick={toggleMenu}   className={`profile-icon-btn ${showMenu ? "active" : ""}`}
->
+      <button
+        onClick={toggleMenu}
+        className={`profile-icon-btn ${showMenu ? "active" : ""}`}
+      >
         <HiOutlineUserCircle size={34} />
       </button>
       <ul className={ulClassName} ref={ulRef}>

@@ -11,6 +11,11 @@ export function ModalProvider({ children }) {
   const [modalContent, setModalContent] = useState(null);
   const [onModalClose, setOnModalClose] = useState(null);
 
+  const openModal = ({ content, onClose }) => {
+  setModalContent(content);
+  setOnModalClose(() => onClose); // optional callback for when modal closes
+};
+
   const closeModal = () => {
     setModalContent(null); 
     if (typeof onModalClose === "function") {
@@ -24,7 +29,8 @@ export function ModalProvider({ children }) {
     modalContent,
     setModalContent,
     setOnModalClose,
-    closeModal
+    closeModal,
+    openModal
   };
 
   return (

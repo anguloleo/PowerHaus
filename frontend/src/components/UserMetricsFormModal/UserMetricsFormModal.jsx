@@ -1,13 +1,15 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { createUserMetric } from "../../store/userMetrics";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { createUserMetric, editUserMetric } from "../../store/userMetrics"; // make sure you have update action
 import { useModal } from "../../context/Modal";
 import './UserMetricsFormModal.css';
 
-export default function UserMetricsFormModal() {
+export default function UserMetricsFormModal({ metric }) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
+  const currentUser = useSelector(state => state.session.user);
 
+  
   const [formData, setFormData] = useState({
     date: "",
     weightLbs: "",
@@ -17,6 +19,21 @@ export default function UserMetricsFormModal() {
     photoUrl: "",
   });
 
+  useEffect(() => {
+    if (metric) {
+      setFormData({
+        date: metric.date || "",
+        weightLbs: metric.weightLbs || "",
+        heightFeet: metric.heightFeet || "",
+        heightInches: metric.heightInches || "",
+        bodyFatPercentage: metric.bodyFatPercentage || "",
+        photoUrl: metric.photoUrl || "",
+      });
+    }
+  }, [metric]);
+
+  const [errors, setErrors] = useState([]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -24,24 +41,41 @@ export default function UserMetricsFormModal() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrors([]);
+
+    const metricData = {
+      ...formData,
+      userId: currentUser?.id
+    };
+
     try {
-      await dispatch(createUserMetric(formData));
+      if (metric) {
+        await dispatch(editUserMetric(metric.id, metricData)); 
+      } else {
+        await dispatch(createUserMetric(metricData)); 
+      }
       closeModal();
-    } catch (err) {
-      console.error("Failed to create user metric:", err);
+      window.location.href = "/user-metrics";
+    } catch (res) {
+      const data = await res.json();
+      if (data?.errors) setErrors(data.errors);
     }
   };
 
   return (
-    <div className="modal-container">
+    <div className="modal-container metrics-modal">
       <div className="modal-header">
-        <h2>Add Progress Entry</h2>
-        <button className="close-button" onClick={closeModal}>
-          &times;
-        </button>
+        <h2>{metric ? "Edit Progress Entry" : "Add Progress Entry"}</h2>
+        <button className="close-button" onClick={closeModal}>&times;</button>
       </div>
 
-      <form onSubmit={handleSubmit} className="metrics-form">
+      {errors.length > 0 && (
+        <ul className="form-errors">
+          {errors.map((err, i) => <li key={i}>{err}</li>)}
+        </ul>
+      )}
+
+      <form className="metrics-form" onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Date:</label>
           <input type="date" name="date" value={formData.date} onChange={handleChange} required />
@@ -74,7 +108,7 @@ export default function UserMetricsFormModal() {
           <input type="url" name="photoUrl" value={formData.photoUrl} onChange={handleChange} />
         </div>
 
-        <button type="submit" className="submit-button">Save Entry</button>
+        <button type="submit">{metric ? "Save Changes" : "Save Entry"}</button>
       </form>
     </div>
   );
