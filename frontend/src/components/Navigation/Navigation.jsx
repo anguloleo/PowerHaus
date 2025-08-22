@@ -1,9 +1,10 @@
-// src/components/Navigation.jsx
+
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import OpenModalButton from "../OpenModalButton/OpenModalButton";
 import RepairRequestFormModal from "../RepairRequestFormModal";
+import UserMetricsFormModal from "../UserMetricsFormModal";
 import "./Navigation.css";
 
 function Navigation({ isLoaded }) {
@@ -43,8 +44,12 @@ function Navigation({ isLoaded }) {
         {/* Quick Action Links */}
         {sessionUser && (
           <ul className="nav-actions">
-            <li>
-              <NavLink to="/user-metrics/new">Add Progress</NavLink>
+              <li>
+              <OpenModalButton
+                buttonText="Add New Body Metrics"
+                modalComponent={<UserMetricsFormModal />}
+                className="orange-button"
+              />
             </li>
             <li>
               <OpenModalButton

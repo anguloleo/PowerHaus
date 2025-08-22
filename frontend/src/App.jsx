@@ -16,7 +16,7 @@ import HomePage from './components/HomePage';
 import RepairRequestList from './components/RepairRequestList';
 import RepairRequestDetail from './components/RepairRequestDetail';
 import UserMetricsDashboard from './components/UserMetricsDashboard';
-import UserMetricsForm from './components/UserMetricsForm';
+import UserMetricsFormModal from './components/UserMetricsFormModal';
 
 
 
@@ -101,7 +101,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/user-metrics/new',
-        element: <UserMetricsForm />
+        element: <UserMetricsFormModal />
       },
 
     ]

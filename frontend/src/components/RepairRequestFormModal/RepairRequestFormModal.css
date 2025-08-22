@@ -1,72 +1,85 @@
-/* RepairRequestFormModal.css */
+.modal-container.repair-modal {
+  padding: 25px 30px;
+  width: 450px;
+  max-width: 95%;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+  animation: slideDown 0.25s ease-out;
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+}
 
-/* Modal Header */
-h2 {
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.6rem;
   color: #FF5A2A;
-  text-align: center;
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
+}
+
+.close-button {
+  border: none;
+  background: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #999;
+  transition: color 0.2s;
+}
+
+.close-button:hover {
+  color: #FF5A2A;
 }
 
 /* Form Styling */
 .repair-request-form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  background-color: #0A1A2F;
-  padding: 2rem;
-  border-radius: 12px;
-  color: #ffffff;
-  max-width: 500px;
-  margin: 0 auto;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  gap: 12px;
 }
 
-/* Labels */
-.repair-request-form label {
+.form-group {
   display: flex;
   flex-direction: column;
-  font-weight: 500;
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
 }
 
-/* Inputs and Textareas */
-.repair-request-form input,
-.repair-request-form select,
-.repair-request-form textarea {
-  margin-top: 0.3rem;
-  padding: 0.5rem 0.7rem;
+label {
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+input, select, textarea {
+  padding: 8px 12px;
   border-radius: 8px;
-  border: 1px solid #FF5A2A;
-  background-color: #0A1A2F;
-  color: #ffffff;
+  border: 1px solid #ccc;
   font-size: 1rem;
   outline: none;
   transition: border 0.2s, box-shadow 0.2s;
 }
 
-.repair-request-form input::placeholder,
-.repair-request-form textarea::placeholder {
-  color: #bbbbbb;
+input::placeholder, textarea::placeholder {
+  color: #aaa;
 }
 
-.repair-request-form input:focus,
-.repair-request-form select:focus,
-.repair-request-form textarea:focus {
+input:focus, select:focus, textarea:focus {
   border-color: #FF5A2A;
-  box-shadow: 0 0 8px #FF5A2A55;
+  box-shadow: 0 0 8px #FF5A2A33;
 }
 
 /* Submit Button */
 .repair-request-form button {
-  padding: 0.7rem;
-  border-radius: 8px;
+  padding: 10px;
+  border-radius: 10px;
   border: none;
   background-color: #FF5A2A;
-  color: #ffffff;
+  color: #fff;
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.2s, transform 0.1s;
 }
@@ -83,9 +96,9 @@ h2 {
 
 /* Errors */
 .form-errors {
-  background-color: #330a00;
+  background-color: #ffe8e0;
   border: 1px solid #FF5A2A;
-  padding: 0.7rem 1rem;
+  padding: 0.8rem 1rem;
   border-radius: 8px;
   list-style-type: none;
   margin-bottom: 1rem;
@@ -94,4 +107,9 @@ h2 {
 
 .form-errors li {
   margin-bottom: 0.3rem;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-15px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
