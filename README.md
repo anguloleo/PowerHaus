@@ -93,11 +93,11 @@ The dashboard aggregates workout activity, class attendance, and progress trends
 
 Planned features include:
 
+- Enrollment
 - Social features (friends, shared workouts, leaderboards)  
 - Subscription and membership payments  
 - Mobile app version for workout tracking  
 - Advanced analytics and personalized recommendations  
-- Class booking and cancellation system
 
 ---
 
