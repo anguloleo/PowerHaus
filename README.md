@@ -1,4 +1,5 @@
 # PowerHaus
+![Home](https://lodgr.s3.us-east-2.amazonaws.com/Screenshot+2025-08-27+165806.png)
 Check out a live version of PowerHaus here: [PowerHaus Live](https://powerhaus-dres.onrender.com/)
 
 PowerHaus is a gym management and workout tracking web application. The backend is built with **Node.js** and **Express**, using **PostgreSQL** for database storage. The frontend is powered by **React**, with state management handled by **Redux** and **Context API** for seamless data flow.
@@ -62,8 +63,6 @@ The dashboard aggregates workout activity, class attendance, and progress trends
 
 ### Screenshots
 
-**Home Preview**  
-![Dashboard](https://lodgr.s3.us-east-2.amazonaws.com/Screenshot+2025-08-27+165806.png)
 
 **Metric Logging**  
 ![Metric Log](https://lodgr.s3.us-east-2.amazonaws.com/Screenshot+2025-08-27+165854.png)
