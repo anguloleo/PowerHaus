@@ -71,9 +71,11 @@ The dashboard aggregates workout activity, class attendance, and progress trends
 **Metric Logging**  
 ![Metric Log](https://lodgr.s3.us-east-2.amazonaws.com/Screenshot+2025-08-27+165854.png)
 **Geo Location**
-![](https://lodgr.s3.us-east-2.amazonaws.com/Screenshot+2025-08-27+165907.png)
-![](https://lodgr.s3.us-east-2.amazonaws.com/Screenshot+2025-08-27+165922.png)
-![](https://lodgr.s3.us-east-2.amazonaws.com/Screenshot+2025-08-27+165943.png)
+![Gyms Map](https://lodgr.s3.us-east-2.amazonaws.com/Screenshot+2025-08-27+165907.png)
+**Class Registration**
+![Class Registration](https://lodgr.s3.us-east-2.amazonaws.com/Screenshot+2025-08-27+165922.png)
+**Repair Request Form**
+![Repair Request](https://lodgr.s3.us-east-2.amazonaws.com/Screenshot+2025-08-27+165943.png)
 ![](https://lodgr.s3.us-east-2.amazonaws.com/Screenshot+2025-08-27+165951.png)
 
 ---
