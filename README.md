@@ -75,10 +75,10 @@ The dashboard aggregates workout activity, class attendance, and progress trends
 **Class Schedule**  
 ![Class Schedule](./docs/class-schedule.png)
 
-(https://lodgr.s3.us-east-2.amazonaws.com/Screenshot+2025-08-27+165907.png)
-(https://lodgr.s3.us-east-2.amazonaws.com/Screenshot+2025-08-27+165922.png)
-(https://lodgr.s3.us-east-2.amazonaws.com/Screenshot+2025-08-27+165943.png)
-(https://lodgr.s3.us-east-2.amazonaws.com/Screenshot+2025-08-27+165951.png)
+![](https://lodgr.s3.us-east-2.amazonaws.com/Screenshot+2025-08-27+165907.png)
+![](https://lodgr.s3.us-east-2.amazonaws.com/Screenshot+2025-08-27+165922.png)
+![](https://lodgr.s3.us-east-2.amazonaws.com/Screenshot+2025-08-27+165943.png)
+![](https://lodgr.s3.us-east-2.amazonaws.com/Screenshot+2025-08-27+165951.png)
 
 ---
 
